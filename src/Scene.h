@@ -14,10 +14,12 @@
 class Scene {
 public:
     Scene();
+    virtual void loop(sf::RenderWindow& window, std::string title);
     virtual void loop(sf::RenderWindow& window);
 protected:
     virtual bool updateObjects(sf::RenderWindow& gWindow, sf::Event& event);
     virtual void renderObjects(sf::RenderWindow& window, float delta);
+    std::string title;
     std::vector<std::shared_ptr<GameObject>> gameObjects;
     uint16_t width, height;
     bool fullscreen;

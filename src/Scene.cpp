@@ -25,9 +25,14 @@ void Scene::renderObjects(sf::RenderWindow& window, float delta) {
     }
 }
 
+void Scene::loop(sf::RenderWindow& window, std::string title) {
+    this->title = title;
+    this->loop(window);
+}
+
 void Scene::loop(sf::RenderWindow& window) {
     if (!window.isOpen()) {
-        window.create(sf::VideoMode(this->width, this->height), "I Am Synthetic", fullscreen ? sf::Style::Fullscreen
+        window.create(sf::VideoMode(this->width, this->height), title, fullscreen ? sf::Style::Fullscreen
                                                                                  : sf::Style::Close);
         window.requestFocus();
         window.setFramerateLimit(Locator::currentConfig["video"]["fps"].as<unsigned int>());
@@ -58,7 +63,7 @@ void Scene::loop(sf::RenderWindow& window) {
                             if (event.key.code == sf::Keyboard::Escape) {
                                 if (this->fullscreen) {
                                     this->fullscreen = false;
-                                    window.create(sf::VideoMode(width, height), "I Am Synthetic", sf::Style::Close);
+                                    window.create(sf::VideoMode(width, height), title, sf::Style::Close);
                                 }
                             }
                             break;
