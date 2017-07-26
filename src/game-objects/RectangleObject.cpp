@@ -2,7 +2,7 @@
 // Created by cilan on 5/25/2017.
 //
 
-#include "RectangleObject.h"
+#include "game-objects/RectangleObject.h"
 
 void RectangleObject::update() {
     _x = this->getShape().getPosition().x;

@@ -2,7 +2,7 @@
 // Created by cilan on 5/25/2017.
 //
 
-#include "TextObject.h"
+#include "game-objects/TextObject.h"
 
 void TextObject::update() {
     _x = this->getText().getPosition().x;

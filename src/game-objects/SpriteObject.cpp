@@ -2,7 +2,7 @@
 // Created by cilan on 5/25/2017.
 //
 
-#include "SpriteObject.h"
+#include "game-objects/SpriteObject.h"
 
 void SpriteObject::update() {
     _x = this->getSprite().getPosition().x;

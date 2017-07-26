@@ -2,7 +2,7 @@
 // Created by cilan on 5/25/2017.
 //
 
-#include "ShapeObject.h"
+#include "game-objects/ShapeObject.h"
 
 void ShapeObject::update() {
     _x = this->getShape().getPosition().x;

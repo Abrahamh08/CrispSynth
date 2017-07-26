@@ -2,7 +2,7 @@
 // Created by cilan on 5/24/2017.
 //
 
-#include "RectangleComponent.h"
+#include "game-objects/components/RectangleComponent.h"
 
 RectangleComponent::RectangleComponent() {
     // do nothing

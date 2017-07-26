@@ -2,7 +2,7 @@
 // Created by cilan on 6/28/2017.
 //
 
-#include "StoryObject.h"
+#include "game-objects/StoryObject.h"
 
 StoryObject::StoryObject(std::queue<sf::Texture>& textures) : textures_(textures) {
     putNext();

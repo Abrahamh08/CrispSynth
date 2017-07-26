@@ -2,7 +2,7 @@
 // Created by cilan on 5/24/2017.
 //
 
-#include "ShapeComponent.h"
+#include "game-objects/components/ShapeComponent.h"
 
 ShapeComponent::ShapeComponent() {
     // do nothing

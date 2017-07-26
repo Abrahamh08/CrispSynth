@@ -2,7 +2,7 @@
 // Created by cilan on 5/25/2017.
 //
 
-#include "InputTextObject.h"
+#include "game-objects/InputTextObject.h"
 
 void InputTextObject::update() {
     _x = textObj.x;

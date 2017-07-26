@@ -2,7 +2,7 @@
 // Created by cilan on 5/24/2017.
 //
 
-#include "TextComponent.h"
+#include "game-objects/components/TextComponent.h"
 
 TextComponent::TextComponent() {
     // do nothing
