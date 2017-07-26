@@ -3,7 +3,7 @@
 // From tutorial: http://ogldev.atspace.co.uk/www/tutorial22/tutorial22.html
 //
 
-#include "BonedMesh.h"
+#include "mesh/BonedMesh.h"
 
 #include <iostream>
 #include <SFML/OpenGL.hpp>
