@@ -2,7 +2,7 @@
 // Created by Abraham Hamidi on 3/7/17.
 //
 
-#include "MainMenuTextures.h"
+#include "resources/MainMenuTextures.h"
 
 sf::Texture *MainMenuTextures::defaultTexture,
             *MainMenuTextures::highlightedTexture,

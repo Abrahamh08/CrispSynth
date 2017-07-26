@@ -8,7 +8,7 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include "Button.h"
+#include "buttons/Button.h"
 #include "game-objects/GameObject.h"
 
 class Scene {

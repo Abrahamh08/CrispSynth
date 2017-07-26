@@ -2,7 +2,7 @@
 // Created by cilan on 1/18/2017.
 //
 
-#include "LocalResources.h"
+#include "resources/LocalResources.h"
 
 sf::Texture LocalResources::loadTexture(std::string state, std::string id, sf::IntRect* rect) {
     // load texture and return thing

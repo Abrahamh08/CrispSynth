@@ -6,32 +6,33 @@ set(LIBRARY_NAME
     crispsynth
 )
 
-set(LIBRARY_HEADERS_DIR
-    include/${LIBRARY_NAME}
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+
+file(
+        GLOB_RECURSE
+        SRC_FILES
+        src/*
+        src/*/*
 )
 
-include_directories(${LIBRARY_HEADERS_DIR})
-
-file(GLOB_RECURSE LIBRARY_HEADERS
-    "${LIBRARY_HEADERS_DIR}/*.h"
-    "${LIBRARY_HEADERS_DIR}/*/*.h"
+file(
+        GLOB_RECURSE
+        INCLUDE_FILES
+        include/{LIBRARY_NAME}/*
+        include/{LIBRARY_NAME}/*/*
 )
 
-set(LIBRARY_SOURCE_DIR
-    src
-)
-
-include_directories(${LIBRARY_SOURCE_DIR})
-
-file(GLOB_RECURSE LIBRARY_SOURCE
-    "${LIBRARY_SOURCE_DIR}/*.cpp"
-    "${LIBRARY_SOURCE_DIR}/*/*.cpp"
-)
+include_directories(include/{LIBRARY_NAME})
 
 add_library(${LIBRARY_NAME} STATIC
-    ${LIBRARY_HEADERS}
-    ${LIBRARY_SOURCE}
+    ${SRC_FILES}
 )
+
+find_package(YamlCpp)
+if(YAMLCPP_FOUND)
+    include_directories(${YAMLCPP_INCLUDE_DIR})
+    target_link_libraries(${LIBRARY_NAME} ${YAMLCPP_LIBRARY})
+endif()
 
 target_include_directories(${LIBRARY_NAME} PRIVATE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${LIBRARY_NAME}>

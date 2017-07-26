@@ -2,7 +2,7 @@
 // Created by cilan on 3/15/2017.
 //
 
-#include "Scene.h"
+#include "scenes/Scene.h"
 
 Scene::Scene() {
     YAML::Node& config = Locator::currentConfig;

@@ -3,7 +3,7 @@
 // From tutorial: http://ogldev.atspace.co.uk/www/tutorial22/tutorial22.html
 //
 
-#include "StaticMesh.h"
+#include "mesh/StaticMesh.h"
 
 #include <iostream>
 #include <SFML/OpenGL.hpp>

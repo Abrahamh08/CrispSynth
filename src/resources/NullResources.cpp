@@ -2,7 +2,7 @@
 // Created by cilan on 1/18/2017.
 //
 
-#include "NullResources.h"
+#include "resources/NullResources.h"
 
 sf::Texture NullResources::loadTexture(std::string state, std::string id, sf::IntRect* rect) {
     // load texture and return thing

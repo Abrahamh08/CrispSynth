@@ -1,4 +1,4 @@
-#include "MeshShaders.h"
+#include "mesh/MeshShaders.h"
 #include <iostream>
 
 GLuint MeshShaders::staticMeshShaderProgram;

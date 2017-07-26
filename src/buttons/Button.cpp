@@ -2,7 +2,7 @@
 // Created by cilan on 2/25/2017.
 //
 
-#include "Button.h"
+#include "buttons/Button.h"
 
 Button::Button(std::string text, bool autoSize) {
     this->init(text, autoSize);
