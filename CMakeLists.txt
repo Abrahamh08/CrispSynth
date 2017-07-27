@@ -6,22 +6,22 @@ set(LIBRARY_NAME
     crispsynth
 )
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake_modules ${CMAKE_MODULE_PATH})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 file(
         GLOB_RECURSE
         SRC_FILES
-        src/*
-        src/*/*
+        ${CMAKE_SOURCE_DIR}/src/*
+        ${CMAKE_SOURCE_DIR}/src/*/*
 )
 
 file(
         GLOB_RECURSE
         INCLUDE_FILES
-        include/{LIBRARY_NAME}/*
-        include/{LIBRARY_NAME}/*/*
+        ${CMAKE_SOURCE_DIR}/include/{LIBRARY_NAME}/*
+        ${CMAKE_SOURCE_DIR}/include/{LIBRARY_NAME}/*/*
 )
 
 include_directories(include/{LIBRARY_NAME})
@@ -31,11 +31,11 @@ add_library(${LIBRARY_NAME} STATIC
 )
 
 INSTALL(TARGETS crispsynth
-    DESTINATION "lib"
-    )
-INSTALL(FILES ${INCLUDE_FILES}
-    DESTINATION "../include"
-    )
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION bin
+)
+
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/${LIBRARY_NAME} DESTINATION include)
 
 find_package(YamlCpp)
 if(YAMLCPP_FOUND)
