@@ -26,7 +26,7 @@ public:
     BonedMesh();
 
     void boneTransform(float TimeInSeconds, std::vector<glm::mat4>& Transforms);
-    bool loadMesh(const boost::filesystem::path relativePath, boost::filesystem::path& assetsDir, std::map<std::string, Texture>& textures) override;
+    bool loadMesh(std::map<std::string, Texture>& textures) override;
     bool initFromScene(const aiScene* pScene) override;
     void draw() override;
 private:

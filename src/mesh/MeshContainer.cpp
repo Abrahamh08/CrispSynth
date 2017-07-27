@@ -1,6 +1,6 @@
 #include "mesh/MeshContainer.h"
 
-MeshContainer::MeshContainer(boost::filesystem::path assetsDir) : assetsDir(assetsDir) {
+MeshContainer::MeshContainer() {
     // don't do anything
 }
 
@@ -26,9 +26,9 @@ BonedMesh* MeshContainer::put(std::string id, std::unique_ptr<BonedMesh> mesh) {
     return bonedMeshes.at(id).get();
 }
 
-BonedMesh* MeshContainer::create(std::string id, boost::filesystem::path relativePath) {
+BonedMesh* MeshContainer::create(std::string id) {
     std::unique_ptr<BonedMesh> tempObject = std::make_unique<BonedMesh>();
-    tempObject->loadMesh(relativePath, assetsDir, textures);
+    tempObject->loadMesh(textures);
     return put(id, std::move(tempObject));
 }
 

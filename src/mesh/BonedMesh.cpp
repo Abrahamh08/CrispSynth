@@ -4,6 +4,7 @@
 //
 
 #include "mesh/BonedMesh.h"
+#include "Locator.h"
 
 #include <iostream>
 #include <SFML/OpenGL.hpp>
@@ -25,8 +26,7 @@ BonedMesh::BonedMesh() {
     memset(&m_Buffers, 0, sizeof(m_Buffers)); // m'buffers *tips hat*
 }
 
-bool BonedMesh::loadMesh(const boost::filesystem::path relativePath, boost::filesystem::path& assetsDir, std::map<std::string, Texture>& textures) {
-    this->assetsDir = &assetsDir;
+bool BonedMesh::loadMesh(std::map<std::string, Texture>& textures) {
     this->textures = &textures;
     bool ret = false;
 
@@ -55,11 +55,11 @@ bool BonedMesh::initMaterials(const aiScene* pScene) {
         aiString texturePath;
         pScene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath, NULL, NULL, NULL, NULL, NULL);
         if (std::string(texturePath.C_Str()).empty()) {
-            texturePath = aiString((*assetsDir / "white.png").string());
+            texturePath = aiString("white.png");
         }
 
         if (textures->find(texturePath.C_Str()) == textures->end()) {
-            Texture texture(GL_TEXTURE_2D, (*assetsDir / texturePath.C_Str()).string());
+            Texture texture(GL_TEXTURE_2D, texturePath.C_Str().string());
             texture.load();
             textures->emplace(texturePath.C_Str(), std::move(texture));
         }

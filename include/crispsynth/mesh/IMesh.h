@@ -14,11 +14,10 @@
 class Mesh
 {
 public:
-    virtual bool loadMesh(const boost::filesystem::path relativePath, boost::filesystem::path& assetsDir, std::map<std::string, Texture>& textures) = 0;
+    virtual bool loadMesh(std::map<std::string, Texture>& textures) = 0;
     virtual bool initFromScene(const aiScene* pScene) = 0;
     virtual void draw() = 0;
 protected:
-    boost::filesystem::path* assetsDir;
     std::map<std::string, Texture>* textures;
 };
 

@@ -21,7 +21,7 @@ StaticMesh::StaticMesh() {
     memset(&m_Buffers, 0, sizeof(m_Buffers)); // m'buffers *tips hat*
 }
 
-bool StaticMesh::loadMesh(const boost::filesystem::path relativePath, boost::filesystem::path& assetsDir, std::map<std::string, Texture>& textures) {
+bool StaticMesh::loadMesh(std::map<std::string, Texture>& textures) {
     if (this->assetsDir == nullptr) {
         this->assetsDir = &assetsDir;
     }
@@ -59,7 +59,7 @@ bool StaticMesh::initMaterials(const aiScene* pScene) {
         }
 
         if (textures->find(texturePath.C_Str()) == textures->end()) {
-            Texture texture(GL_TEXTURE_2D, (*assetsDir / texturePath.C_Str()).string());
+            Texture texture(GL_TEXTURE_2D, texturePath.C_Str().string());
             texture.load();
             textures->emplace(texturePath.C_Str(), std::move(texture));
         }
