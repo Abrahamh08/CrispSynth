@@ -11,7 +11,7 @@
 class MeshContainer
 {
 public:
-    MeshContainer(boost::filesystem::path assetsDir);
+    MeshContainer();
     BonedMesh* put(std::string id, std::unique_ptr<BonedMesh> mesh);
     BonedMesh* create(std::string group, std::string id);
     StaticMesh* put(std::string id, std::unique_ptr<StaticMesh> mesh);
@@ -25,8 +25,6 @@ private:
     std::map<std::string, Mesh*> meshes;
 
     std::map<std::string, Texture> textures;
-
-    boost::filesystem::path assetsDir;
 };
 
 #endif

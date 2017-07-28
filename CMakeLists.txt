@@ -11,17 +11,17 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 file(
-        GLOB_RECURSE
-        SRC_FILES
-        ${CMAKE_SOURCE_DIR}/src/*
-        ${CMAKE_SOURCE_DIR}/src/*/*
+    GLOB_RECURSE
+    SRC_FILES
+    ${CMAKE_SOURCE_DIR}/src/*
+    ${CMAKE_SOURCE_DIR}/src/*/*
 )
 
 file(
-        GLOB_RECURSE
-        INCLUDE_FILES
-        ${CMAKE_SOURCE_DIR}/include/{LIBRARY_NAME}/*
-        ${CMAKE_SOURCE_DIR}/include/{LIBRARY_NAME}/*/*
+    GLOB_RECURSE
+    INCLUDE_FILES
+    ${CMAKE_SOURCE_DIR}/include/{LIBRARY_NAME}/*
+    ${CMAKE_SOURCE_DIR}/include/{LIBRARY_NAME}/*/*
 )
 
 include_directories(include/{LIBRARY_NAME})
@@ -30,17 +30,53 @@ add_library(${LIBRARY_NAME} STATIC
     ${SRC_FILES}
 )
 
-INSTALL(TARGETS crispsynth
+install(TARGETS crispsynth
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION bin
 )
 
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/${LIBRARY_NAME} DESTINATION include)
 
+find_package(Boost COMPONENTS system thread filesystem REQUIRED)
+if (BOOST_FOUND)
+    include_directories(BOOST_INCLUDE_DIRS)
+    target_link_libraries(${LIBRARY_NAME} ${Boost_LIBRARIES})
+endif()
+
 find_package(YamlCpp)
 if(YAMLCPP_FOUND)
     include_directories(${YAMLCPP_INCLUDE_DIR})
     target_link_libraries(${LIBRARY_NAME} ${YAMLCPP_LIBRARY})
+endif()
+
+find_package(SFML 2 REQUIRED system window graphics network audio)
+if (SFML_FOUND)
+    include_directories(${SFML_INCLUDE_DIR})
+    target_link_libraries(${LIBRARY_NAME} ${SFML_LIBRARIES})
+endif()
+
+find_package(OpenGL)
+if (OPENGL_FOUND)
+    include_directories(${OPENGL_INCLUDE_DIR})
+    target_link_libraries(${LIBRARY_NAME} ${OPENGL_LIBRARIES})
+endif()
+
+find_package(GLEW)
+if (GLEW_FOUND)
+    include_directories(${GLEW_INCLUDE_DIRS})
+    target_link_libraries(${LIBRARY_NAME} ${GLEW_LIBRARIES})
+endif()
+
+find_package(GLM)
+if (GLM_FOUND)
+    include_directories(${GLM_INCLUDE_DIRS})
+    target_link_libraries(${LIBRARY_NAME} ${GLM_LIBRARIES})
+endif()
+
+find_package(ASSIMP)
+if (ASSIMP_FOUND)
+    include_directories(${ASSIMP_INCLUDE_DIRS})
+    target_link_libraries(${LIBRARY_NAME} ${ASSIMP_LIBRARIES})
 endif()
 
 target_include_directories(${LIBRARY_NAME} PRIVATE

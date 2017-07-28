@@ -1,7 +1,7 @@
 #include "mesh/MeshContainer.h"
 #include "Locator.h"
 
-MeshContainer::MeshContainer(boost::filesystem::path assetsDir) : assetsDir(assetsDir) {
+MeshContainer::MeshContainer() {
     // don't do anything
 }
 
