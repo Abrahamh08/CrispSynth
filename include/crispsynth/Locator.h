@@ -8,6 +8,7 @@
 #include "resources/LocalResources.h"
 #include "resources/NullResources.h"
 
+#include <SFML/Audio.hpp>
 #include <boost/filesystem.hpp>
 #include <memory>
 

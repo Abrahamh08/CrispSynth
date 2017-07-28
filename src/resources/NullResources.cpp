@@ -10,6 +10,12 @@ sf::Texture NullResources::loadTexture(std::string state, std::string id, sf::In
     return sf::Texture();
 }
 
+std::unique_ptr<BonedMesh> loadBonedMesh(std::string group, std::string id, std::map<std::string, Texture> textures) {
+    // load boned mesh and return thing
+    std::cout << "null boned mesh loaded named " << id << " from " << group << " group" << std::endl;
+    return std::make_unique<BonedMesh>();
+}
+
 std::unique_ptr<sf::Music> NullResources::loadMusic(std::string state, std::string id) {
     // load music and return thing
     std::cout << "null music being loaded named " << id << " during " << state << " state" << std::endl;

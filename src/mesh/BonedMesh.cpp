@@ -11,6 +11,7 @@
 #include <glm/gtx/transform.hpp>
 #include <assimp/postprocess.h>
 #include <chrono>
+#include "Locator.h"
 
 BonedMesh::MeshEntry::MeshEntry()
 {
@@ -25,9 +26,8 @@ BonedMesh::BonedMesh() {
     memset(&m_Buffers, 0, sizeof(m_Buffers)); // m'buffers *tips hat*
 }
 
-bool BonedMesh::loadMesh(const boost::filesystem::path relativePath, boost::filesystem::path& assetsDir, std::map<std::string, Texture>& textures) {
-    this->assetsDir = &assetsDir;
-    this->textures = &textures;
+bool BonedMesh::loadFromFile(boost::filesystem::path path, std::map<std::string, Texture>& textures) {
+    this->path = path;
     bool ret = false;
 
     glGenVertexArrays(1, &m_VAO);
@@ -35,9 +35,9 @@ bool BonedMesh::loadMesh(const boost::filesystem::path relativePath, boost::file
 
     glGenBuffers(sizeof(m_Buffers) / sizeof(*m_Buffers), m_Buffers);
 
-    m_pScene = m_importer.ReadFile((assetsDir / relativePath).string(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
+    m_pScene = m_importer.ReadFile(path.string(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
 
-    if (m_pScene) {
+    if (m_pScene != nullptr) {
         m_GlobalInverseTransform = m_pScene->mRootNode->mTransformation;
         m_GlobalInverseTransform.Inverse();
         ret = initFromScene(m_pScene);
@@ -53,13 +53,13 @@ bool BonedMesh::loadMesh(const boost::filesystem::path relativePath, boost::file
 bool BonedMesh::initMaterials(const aiScene* pScene) {
     for (unsigned int i = 0; i < pScene->mNumMaterials; ++i) {
         aiString texturePath;
-        pScene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath, NULL, NULL, NULL, NULL, NULL);
+        pScene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath, nullptr, nullptr, nullptr, nullptr, nullptr);
         if (std::string(texturePath.C_Str()).empty()) {
-            texturePath = aiString((*assetsDir / "white.png").string());
+            texturePath = aiString((Locator::rootPath / "assets/images/standard/white.png").string());
         }
 
         if (textures->find(texturePath.C_Str()) == textures->end()) {
-            Texture texture(GL_TEXTURE_2D, (*assetsDir / texturePath.C_Str()).string());
+            Texture texture(GL_TEXTURE_2D, (path.parent_path() / texturePath.C_Str()).string());
             texture.load();
             textures->emplace(texturePath.C_Str(), std::move(texture));
         }
@@ -140,7 +140,7 @@ void BonedMesh::calcInterpolatedScaling(aiVector3D& Out, float AnimationTime, co
     unsigned int ScalingIndex = findScaling(AnimationTime, pNodeAnim);
     unsigned int NextScalingIndex = (ScalingIndex + 1);
     assert(NextScalingIndex < pNodeAnim->mNumScalingKeys);
-    float DeltaTime = (float)(pNodeAnim->mScalingKeys[NextScalingIndex].mTime - pNodeAnim->mScalingKeys[ScalingIndex].mTime);
+    auto DeltaTime = (float)(pNodeAnim->mScalingKeys[NextScalingIndex].mTime - pNodeAnim->mScalingKeys[ScalingIndex].mTime);
     float Factor = (AnimationTime - (float)pNodeAnim->mScalingKeys[ScalingIndex].mTime) / DeltaTime;
     assert(Factor >= 0.0f && Factor <= 1.0f);
     const aiVector3D& Start = pNodeAnim->mScalingKeys[ScalingIndex].mValue;
@@ -171,7 +171,7 @@ void BonedMesh::calcInterpolatedPosition(aiVector3D& Out, float AnimationTime, c
     unsigned int PositionIndex = findPosition(AnimationTime, pNodeAnim);
     unsigned int NextPositionIndex = (PositionIndex + 1);
     assert(NextPositionIndex < pNodeAnim->mNumPositionKeys);
-    float DeltaTime = (float)(pNodeAnim->mPositionKeys[NextPositionIndex].mTime - pNodeAnim->mPositionKeys[PositionIndex].mTime);
+    auto DeltaTime = (float)(pNodeAnim->mPositionKeys[NextPositionIndex].mTime - pNodeAnim->mPositionKeys[PositionIndex].mTime);
     float Factor = (AnimationTime - (float)pNodeAnim->mPositionKeys[PositionIndex].mTime) / DeltaTime;
     assert(Factor >= 0.0f && Factor <= 1.0f);
     const aiVector3D& Start = pNodeAnim->mPositionKeys[PositionIndex].mValue;
@@ -190,7 +190,7 @@ void BonedMesh::ReadNodeHierarchy(float AnimationTime, const aiNode* pNode, cons
 
     const aiNodeAnim *pNodeAnim = findNodeAnim(pAnimation, NodeName);
 
-    if (pNodeAnim) {
+    if (pNodeAnim != nullptr) {
         // Interpolate scaling and generate scaling transformation matrix
         aiVector3D Scaling;
         calcInterpolatedScaling(Scaling, AnimationTime, pNodeAnim);
@@ -295,9 +295,9 @@ bool BonedMesh::initFromScene(const aiScene* pScene) {
             const aiVector3D &pos = meshy->mVertices[j];
             const aiVector3D &tc = meshy->HasTextureCoords(0) ? meshy->mTextureCoords[0][j] : zero3D;
             const aiVector3D &n = meshy->mNormals[j];
-            positions.push_back(glm::vec3(pos.x, pos.y, pos.z));
-            texCoords.push_back(glm::vec2(tc.x, tc.y));
-            normals.push_back(glm::vec3(n.x, n.y, n.z));
+            positions.emplace_back(glm::vec3(pos.x, pos.y, pos.z));
+            texCoords.emplace_back(glm::vec2(tc.x, tc.y));
+            normals.emplace_back(glm::vec3(n.x, n.y, n.z));
         }
 
         for (unsigned int j = 0; j < meshy->mNumFaces; ++j) {
@@ -315,7 +315,7 @@ bool BonedMesh::initFromScene(const aiScene* pScene) {
 
             if (m_boneMapping.find(boneName) == m_boneMapping.end()) {
                 boneIndex = numBones;
-                m_boneInfo.push_back(BoneInfo());
+                m_boneInfo.emplace_back(BoneInfo());
                 m_boneMapping[boneName] = boneIndex;
                 m_boneInfo[boneIndex].boneOffset = aiMatrix4x4ToGlm(&bone->mOffsetMatrix);
                 numBones++;
@@ -338,7 +338,7 @@ bool BonedMesh::initFromScene(const aiScene* pScene) {
     glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(positions[0]) * positions.size(), &positions[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TEXCOORD_VB]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords[0]) * texCoords.size(), &texCoords[0], GL_STATIC_DRAW);
@@ -391,5 +391,5 @@ const aiNodeAnim* BonedMesh::findNodeAnim(const aiAnimation* pAnimation, const s
         }
     }
 
-    return NULL;
+    return nullptr;
 }

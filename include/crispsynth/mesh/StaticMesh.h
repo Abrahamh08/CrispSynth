@@ -25,7 +25,7 @@ class StaticMesh : public Mesh
 public:
     StaticMesh();
 
-    bool loadMesh(const boost::filesystem::path relativePath, boost::filesystem::path& assetsDir, std::map<std::string, Texture>& textures) override;
+    bool loadFromFile(boost::filesystem::path path, std::map<std::string, Texture>& textures) override;
     bool initFromScene(const aiScene* pScene) override;
     void draw() override;
 private:

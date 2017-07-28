@@ -9,6 +9,7 @@
 #include <glm/gtx/transform.hpp>
 #include <assimp/postprocess.h>
 #include <chrono>
+#include "Locator.h"
 
 StaticMesh::MeshEntry::MeshEntry()
 {
@@ -21,13 +22,8 @@ StaticMesh::StaticMesh() {
     memset(&m_Buffers, 0, sizeof(m_Buffers)); // m'buffers *tips hat*
 }
 
-bool StaticMesh::loadMesh(const boost::filesystem::path relativePath, boost::filesystem::path& assetsDir, std::map<std::string, Texture>& textures) {
-    if (this->assetsDir == nullptr) {
-        this->assetsDir = &assetsDir;
-    }
-    if (this->textures == nullptr) {
-        this->textures = &textures;
-    }
+bool StaticMesh::loadFromFile(boost::filesystem::path path, std::map<std::string, Texture>& textures) {
+    this->path = path;
     bool ret = false;
 
     glGenVertexArrays(1, &m_VAO);
@@ -35,9 +31,9 @@ bool StaticMesh::loadMesh(const boost::filesystem::path relativePath, boost::fil
 
     glGenBuffers(sizeof(m_Buffers) / sizeof(*m_Buffers), m_Buffers);
 
-    m_pScene = m_importer.ReadFile((assetsDir / relativePath).string(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
+    m_pScene = m_importer.ReadFile(path.string(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
 
-    if (m_pScene) {
+    if (m_pScene != nullptr) {
         m_GlobalInverseTransform = m_pScene->mRootNode->mTransformation;
         m_GlobalInverseTransform.Inverse();
         ret = initFromScene(m_pScene);
@@ -53,13 +49,13 @@ bool StaticMesh::loadMesh(const boost::filesystem::path relativePath, boost::fil
 bool StaticMesh::initMaterials(const aiScene* pScene) {
     for (unsigned int i = 0; i < pScene->mNumMaterials; ++i) {
         aiString texturePath;
-        pScene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath, NULL, NULL, NULL, NULL, NULL);
+        pScene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath, nullptr, nullptr, nullptr, nullptr, nullptr);
         if (std::string(texturePath.C_Str()).empty()) {
-            texturePath = aiString(assetsDir->string() + "white.png");
+            texturePath = aiString((Locator::rootPath / "assets/images/standard/white.png").string());
         }
 
         if (textures->find(texturePath.C_Str()) == textures->end()) {
-            Texture texture(GL_TEXTURE_2D, (*assetsDir / texturePath.C_Str()).string());
+            Texture texture(GL_TEXTURE_2D, (path.parent_path() / texturePath.C_Str()).string());
             texture.load();
             textures->emplace(texturePath.C_Str(), std::move(texture));
         }
@@ -89,7 +85,7 @@ bool StaticMesh::initFromScene(const aiScene* pScene) {
         numVertices += pScene->mMeshes[i]->mNumVertices;
         numIndices += entry.numIndices;
 
-        m_Entries[i] = std::move(entry);
+        m_Entries[i] = entry;
     }
 
     positions.reserve(numVertices);
@@ -106,9 +102,9 @@ bool StaticMesh::initFromScene(const aiScene* pScene) {
             const aiVector3D &pos = meshy->mVertices[j];
             const aiVector3D &tc = meshy->HasTextureCoords(0) ? meshy->mTextureCoords[0][j] : zero3D;
             const aiVector3D &n = meshy->mNormals[j];
-            positions.push_back(glm::vec3(pos.x, pos.y, pos.z));
-            texCoords.push_back(glm::vec2(tc.x, tc.y));
-            normals.push_back(glm::vec3(n.x, n.y, n.z));
+            positions.emplace_back(glm::vec3(pos.x, pos.y, pos.z));
+            texCoords.emplace_back(glm::vec2(tc.x, tc.y));
+            normals.emplace_back(glm::vec3(n.x, n.y, n.z));
         }
 
         for (unsigned int j = 0; j < meshy->mNumFaces; ++j) {
@@ -127,17 +123,17 @@ bool StaticMesh::initFromScene(const aiScene* pScene) {
     glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[POS_VB]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(positions[0]) * positions.size(), &positions[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[TEXCOORD_VB]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords[0]) * texCoords.size(), &texCoords[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     glBindBuffer(GL_ARRAY_BUFFER, m_Buffers[NORMAL_VB]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(normals[0]) * normals.size(), &normals[0], GL_STATIC_DRAW);
     glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     return glGetError() == GL_NO_ERROR;
 }
@@ -147,7 +143,7 @@ void StaticMesh::draw() {
 
     for (const auto &mesh : m_Entries) {
         m_Textures[mesh.materialIndex]->bind(GL_TEXTURE0);
-        glDrawElements(GL_TRIANGLES, mesh.numIndices, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, mesh.numIndices, GL_UNSIGNED_INT, nullptr);
     }
 
     glBindVertexArray(0);

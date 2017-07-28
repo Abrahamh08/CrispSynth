@@ -13,7 +13,7 @@ class MeshContainer
 public:
     MeshContainer(boost::filesystem::path assetsDir);
     BonedMesh* put(std::string id, std::unique_ptr<BonedMesh> mesh);
-    BonedMesh* create(std::string id, boost::filesystem::path relativePath);
+    BonedMesh* create(std::string group, std::string id);
     StaticMesh* put(std::string id, std::unique_ptr<StaticMesh> mesh);
     StaticMesh* getStatic(std::string id);
     BonedMesh* getBoned(std::string id);
