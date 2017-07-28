@@ -19,7 +19,7 @@ Locator::Locator() {
 
 void Locator::provideResourcesService(std::shared_ptr<IResources> service) {
     resourcesService_.reset();
-    if (service == NULL) {
+    if (service == nullptr) {
         resourcesService_ = nullResourcesService_;
     } else {
         resourcesService_ = std::move(service);
