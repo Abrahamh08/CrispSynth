@@ -27,9 +27,14 @@ BonedMesh* MeshContainer::put(std::string id, std::unique_ptr<BonedMesh> mesh) {
     return bonedMeshes.at(id).get();
 }
 
-BonedMesh* MeshContainer::create(std::string group, std::string id) {
+BonedMesh* MeshContainer::createBoned(std::string group, std::string id) {
     std::unique_ptr<BonedMesh> tempObject = Locator::getResource()->loadBonedMesh(group, id, textures);
-    return put(group + "/" + id, std::move(tempObject));
+    return put((boost::filesystem::path(group) / id).string(), std::move(tempObject));
+}
+
+StaticMesh* MeshContainer::createStatic(std::string group, std::string id) {
+    std::unique_ptr<StaticMesh> tempObject = Locator::getResource()->loadStaticMesh(group, id, textures);
+    return put((boost::filesystem::path(group) / id).string(), std::move(tempObject));
 }
 
 StaticMesh* MeshContainer::put(std::string id, std::unique_ptr<StaticMesh> mesh) {

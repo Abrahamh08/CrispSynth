@@ -33,6 +33,18 @@ std::unique_ptr<BonedMesh> LocalResources::loadBonedMesh(std::string group, std:
     return mesh;
 }
 
+std::unique_ptr<StaticMesh> LocalResources::loadStaticMesh(std::string group, std::string id, std::map<std::string, Texture>& textures) {
+    // load static mesh and return thing
+    boost::filesystem::path path = Locator::rootPath / "assets" / "meshes" / group / id;
+
+    std::cout << "loading static mesh named " << id.c_str() << std::endl;
+
+    std::unique_ptr<StaticMesh> mesh = std::make_unique<StaticMesh>();
+    mesh->loadFromFile(path, textures);
+
+    return mesh;
+}
+
 std::unique_ptr<sf::Music> LocalResources::loadMusic(std::string state, std::string id) {
     // load music and return thing
     std::string path = (Locator::rootPath / "assets" / "audio" / "music" / state / id).generic_string();

@@ -17,6 +17,12 @@ std::unique_ptr<BonedMesh> NullResources::loadBonedMesh(std::string group, std::
     return std::make_unique<BonedMesh>();
 }
 
+std::unique_ptr<StaticMesh> NullResources::loadStaticMesh(std::string group, std::string id, std::map<std::string, Texture>& textures) {
+    // load boned mesh and return thing
+    std::cout << "null boned mesh loaded named " << id << " from " << group << " group" << std::endl;
+    return std::make_unique<StaticMesh>();
+}
+
 std::unique_ptr<sf::Music> NullResources::loadMusic(std::string state, std::string id) {
     // load music and return thing
     std::cout << "null music being loaded named " << id << " during " << state << " state" << std::endl;
