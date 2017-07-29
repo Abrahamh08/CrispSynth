@@ -3,6 +3,7 @@
 //
 
 #include "crispsynth/resources/NullResources.h"
+#include "crispsynth/mesh/StaticMesh.h"
 #include "crispsynth/mesh/BonedMesh.h"
 
 sf::Texture NullResources::loadTexture(std::string state, std::string id, sf::IntRect* rect) {

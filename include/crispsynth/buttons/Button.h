@@ -2,6 +2,9 @@
 // Created by cilan on 2/25/2017.
 //
 
+#ifndef I_AM_SYNTHETIC_C_SFML_BUTTON_H
+#define I_AM_SYNTHETIC_C_SFML_BUTTON_H
+
 #include <string>
 #include <iostream>
 #include <SFML/Graphics/Texture.hpp>
@@ -11,9 +14,6 @@
 #include "../game-objects/components/RenderComponent.h"
 #include "../game-objects/GameObject.h"
 #include "../game-objects/SpriteObject.h"
-
-#ifndef I_AM_SYNTHETIC_C_SFML_BUTTON_H
-#define I_AM_SYNTHETIC_C_SFML_BUTTON_H
 
 class Button : public GameObject {
 public:

@@ -5,7 +5,7 @@
 #include "crispsynth/buttons/Button.h"
 
 Button::Button(std::string text, bool autoSize) {
-    this->init(text, autoSize);
+    this->init(std::move(text), autoSize);
 }
 
 Button::Button() {
@@ -22,7 +22,7 @@ void Button::updateScale(float scaleX, float scaleY) {
 
 void Button::init(std::string text, bool autoSize) {
     this->autoSize = autoSize;
-    this->setLabel(text);
+    this->setLabel(std::move(text));
 }
 
 void Button::updateTexture() {
