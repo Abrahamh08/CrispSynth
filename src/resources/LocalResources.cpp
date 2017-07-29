@@ -23,7 +23,7 @@ sf::Texture LocalResources::loadTexture(std::string state, std::string id, sf::I
 
 std::unique_ptr<BonedMesh> LocalResources::loadBonedMesh(std::string group, std::string id, std::map<std::string, Texture>& textures) {
     // load boned mesh and return thing
-    std::string path = (Locator::rootPath / "assets" / "meshes" / group / id).generic_string();
+    boost::filesystem::path path = Locator::rootPath / "assets" / "meshes" / group / id;
 
     std::cout << "loading boned mesh named " << id.c_str() << std::endl;
 

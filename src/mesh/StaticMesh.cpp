@@ -23,6 +23,7 @@ StaticMesh::StaticMesh() {
 }
 
 bool StaticMesh::loadFromFile(boost::filesystem::path path, std::map<std::string, Texture>& textures) {
+    this->textures = &textures;
     this->path = path;
     bool ret = false;
 
