@@ -6,12 +6,12 @@
 #include <iostream>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
-#include "Locator.h"
-#include "resources/MainMenuTextures.h"
-#include "game-objects/components/SpriteComponent.h"
-#include "game-objects/components/RenderComponent.h"
-#include "game-objects/GameObject.h"
-#include "game-objects/SpriteObject.h"
+#include "../Locator.h"
+#include "../resources/MainMenuTextures.h"
+#include "../game-objects/components/SpriteComponent.h"
+#include "../game-objects/components/RenderComponent.h"
+#include "../game-objects/GameObject.h"
+#include "../game-objects/SpriteObject.h"
 
 #ifndef I_AM_SYNTHETIC_C_SFML_BUTTON_H
 #define I_AM_SYNTHETIC_C_SFML_BUTTON_H

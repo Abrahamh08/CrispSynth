@@ -2,7 +2,8 @@
 // Created by cilan on 1/18/2017.
 //
 
-#include "resources/LocalResources.h"
+#include "crispsynth/resources/LocalResources.h"
+#include "crispsynth/mesh/BonedMesh.h"
 
 sf::Texture LocalResources::loadTexture(std::string state, std::string id, sf::IntRect* rect) {
     // load texture and return thing
@@ -20,7 +21,7 @@ sf::Texture LocalResources::loadTexture(std::string state, std::string id, sf::I
     return returnTexture;
 }
 
-std::unique_ptr<BonedMesh> loadBonedMesh(std::string group, std::string id, std::map<std::string, Texture>& textures) {
+std::unique_ptr<BonedMesh> LocalResources::loadBonedMesh(std::string group, std::string id, std::map<std::string, Texture>& textures) {
     // load boned mesh and return thing
     std::string path = (Locator::rootPath / "assets" / "meshes" / group / id).generic_string();
 

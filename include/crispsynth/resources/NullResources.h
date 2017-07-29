@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "IResources.h"
+#include "../mesh/BonedMesh.h"
 
 class NullResources : public IResources {
 public:

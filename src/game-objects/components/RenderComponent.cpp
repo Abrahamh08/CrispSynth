@@ -1,4 +1,4 @@
-#include "game-objects/components/RenderComponent.h"
+#include "crispsynth/game-objects/components/RenderComponent.h"
 
 RenderComponent::RenderComponent() {
     // do nothing

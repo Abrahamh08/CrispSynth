@@ -2,7 +2,7 @@
 // Created by cilan on 5/25/2017.
 //
 
-#include "game-objects/ShapeObject.h"
+#include "crispsynth/game-objects/ShapeObject.h"
 
 void ShapeObject::update() {
     _x = this->getShape().getPosition().x;

@@ -2,7 +2,7 @@
 // Created by cilan on 7/6/2017.
 //
 
-#include "mesh/Texture.h"
+#include "crispsynth/mesh/Texture.h"
 #include <GL/glew.h>
 #include <SFML/OpenGL.hpp>
 #include <iostream>

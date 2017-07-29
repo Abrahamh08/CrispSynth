@@ -2,7 +2,7 @@
 // Created by cilan on 5/24/2017.
 //
 
-#include "game-objects/components/ShapeComponent.h"
+#include "crispsynth/game-objects/components/ShapeComponent.h"
 
 ShapeComponent::ShapeComponent() {
     // do nothing

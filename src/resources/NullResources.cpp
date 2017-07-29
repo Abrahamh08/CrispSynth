@@ -2,7 +2,8 @@
 // Created by cilan on 1/18/2017.
 //
 
-#include "resources/NullResources.h"
+#include "crispsynth/resources/NullResources.h"
+#include "crispsynth/mesh/BonedMesh.h"
 
 sf::Texture NullResources::loadTexture(std::string state, std::string id, sf::IntRect* rect) {
     // load texture and return thing
@@ -10,7 +11,7 @@ sf::Texture NullResources::loadTexture(std::string state, std::string id, sf::In
     return sf::Texture();
 }
 
-std::unique_ptr<BonedMesh> loadBonedMesh(std::string group, std::string id, std::map<std::string, Texture> textures) {
+std::unique_ptr<BonedMesh> NullResources::loadBonedMesh(std::string group, std::string id, std::map<std::string, Texture>& textures) {
     // load boned mesh and return thing
     std::cout << "null boned mesh loaded named " << id << " from " << group << " group" << std::endl;
     return std::make_unique<BonedMesh>();

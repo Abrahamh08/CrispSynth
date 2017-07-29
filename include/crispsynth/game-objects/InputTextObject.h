@@ -12,7 +12,7 @@ public:
     InputTextObject();
     InputTextObject(std::string label, const sf::Font& font, const unsigned int len);
     virtual void updatePosition(float tx, float ty) override;
-    virtual bool update(sf::RenderWindow& gWindow, sf::Event& event);
+    virtual bool update(sf::RenderWindow& gWindow, sf::Event& event) override;
     virtual void render(sf::RenderWindow& gWindow, float delta) override;
     void update(const std::string label, const sf::Font& font);
     void updateText(const std::string label);

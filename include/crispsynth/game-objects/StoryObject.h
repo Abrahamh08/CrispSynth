@@ -11,9 +11,9 @@
 class StoryObject : public GameObject {
 public:
     StoryObject(std::queue<sf::Texture>& textures);
-    bool update(sf::RenderWindow& gWindow, sf::Event& event);
+    bool update(sf::RenderWindow& gWindow, sf::Event& event) override;
     virtual void update() override;
-    void render(sf::RenderWindow& gWindow, float delta);
+    void render(sf::RenderWindow& gWindow, float delta) override;
     virtual void updatePosition(float tx, float ty) override;
     void updateScale(float scaleX, float scaleY);
     sf::Sprite& getSprite();

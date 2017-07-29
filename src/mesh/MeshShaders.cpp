@@ -1,4 +1,4 @@
-#include "mesh/MeshShaders.h"
+#include "crispsynth/mesh/MeshShaders.h"
 #include <iostream>
 
 GLuint MeshShaders::staticMeshShaderProgram;

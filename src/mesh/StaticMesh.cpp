@@ -3,13 +3,13 @@
 // From tutorial: http://ogldev.atspace.co.uk/www/tutorial22/tutorial22.html
 //
 
-#include "mesh/StaticMesh.h"
+#include "crispsynth/mesh/StaticMesh.h"
 
 #include <iostream>
 #include <glm/gtx/transform.hpp>
 #include <assimp/postprocess.h>
 #include <chrono>
-#include "Locator.h"
+#include "crispsynth/Locator.h"
 
 StaticMesh::MeshEntry::MeshEntry()
 {

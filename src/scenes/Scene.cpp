@@ -2,7 +2,9 @@
 // Created by cilan on 3/15/2017.
 //
 
-#include "scenes/Scene.h"
+#include "crispsynth/scenes/Scene.h"
+#include "crispsynth/Locator.h"
+#include "crispsynth/game-objects/GameObject.h"
 
 Scene::Scene() {
     YAML::Node& config = Locator::currentConfig;

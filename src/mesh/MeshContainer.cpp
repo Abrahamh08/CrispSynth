@@ -1,5 +1,5 @@
-#include "mesh/MeshContainer.h"
-#include "Locator.h"
+#include "crispsynth/mesh/MeshContainer.h"
+#include "crispsynth/Locator.h"
 
 MeshContainer::MeshContainer() {
     // don't do anything

@@ -9,7 +9,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio/Music.hpp>
 #include <yaml-cpp/yaml.h>
-#include "mesh/BonedMesh.h"
+#include "../mesh/BonedMesh.h"
 
 class IResources {
 public:
