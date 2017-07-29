@@ -7,7 +7,6 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include "../Locator.h"
-#include "../resources/MainMenuTextures.h"
 #include "../game-objects/components/SpriteComponent.h"
 #include "../game-objects/components/RenderComponent.h"
 #include "../game-objects/GameObject.h"
