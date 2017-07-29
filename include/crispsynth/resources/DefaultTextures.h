@@ -11,7 +11,6 @@
 
 class DefaultTextures {
 public:
-    static void init();
     static sf::Font defaultFont;
     static sf::Font typeFont;
 };
