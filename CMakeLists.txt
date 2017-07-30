@@ -28,6 +28,7 @@ include_directories(include/{LIBRARY_NAME})
 
 add_library(${LIBRARY_NAME} STATIC
     ${SRC_FILES}
+    ${INCLUDE_FILES}
 )
 
 install(TARGETS crispsynth
