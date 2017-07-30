@@ -1,10 +1,6 @@
 #include "crispsynth/mesh/MeshContainer.h"
 #include "crispsynth/Locator.h"
 
-MeshContainer::MeshContainer() {
-    // don't do anything
-}
-
 bool MeshContainer::has(std::string id) {
     return meshes.find(id) != meshes.end();
 }

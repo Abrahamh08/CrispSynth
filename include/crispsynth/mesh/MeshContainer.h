@@ -11,7 +11,7 @@
 class MeshContainer
 {
 public:
-    MeshContainer();
+    MeshContainer() = default;
     BonedMesh* put(std::string id, std::unique_ptr<BonedMesh> mesh);
     BonedMesh* createBoned(std::string group, std::string id);
     StaticMesh* createStatic(std::string group, std::string id);
