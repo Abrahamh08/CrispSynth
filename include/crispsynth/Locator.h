@@ -7,6 +7,7 @@
 
 #include "resources/LocalResources.h"
 #include "resources/NullResources.h"
+#include <yaml-cpp/yaml.h>
 
 #include <SFML/Audio.hpp>
 #include <boost/filesystem.hpp>

@@ -7,7 +7,7 @@ set(LIBRARY_NAME
 )
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake_modules ${CMAKE_MODULE_PATH})
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 file(
@@ -39,16 +39,8 @@ install(TARGETS crispsynth
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/${LIBRARY_NAME} DESTINATION include)
 
 find_package(Boost COMPONENTS system thread filesystem REQUIRED)
-if (BOOST_FOUND)
-    include_directories(BOOST_INCLUDE_DIRS)
-    target_link_libraries(${LIBRARY_NAME} ${Boost_LIBRARIES})
-endif()
-
-find_package(YamlCpp)
-if(YAMLCPP_FOUND)
-    include_directories(${YAMLCPP_INCLUDE_DIR})
-    target_link_libraries(${LIBRARY_NAME} ${YAMLCPP_LIBRARY})
-endif()
+include_directories(BOOST_INCLUDE_DIRS)
+target_link_libraries(${LIBRARY_NAME} ${Boost_LIBRARIES})
 
 find_package(SFML 2 REQUIRED system window graphics network audio)
 if (SFML_FOUND)
@@ -78,6 +70,13 @@ find_package(ASSIMP)
 if (ASSIMP_FOUND)
     include_directories(${ASSIMP_INCLUDE_DIRS})
     target_link_libraries(${LIBRARY_NAME} ${ASSIMP_LIBRARIES})
+endif()
+
+set(YAMLCPP_STATIC_LIBRARY TRUE)
+find_package(YamlCpp)
+if(YAMLCPP_FOUND)
+    include_directories(${YAMLCPP_INCLUDE_DIR})
+    target_link_libraries(${LIBRARY_NAME} ${YAMLCPP_LIBRARY})
 endif()
 
 target_include_directories(${LIBRARY_NAME} PRIVATE
