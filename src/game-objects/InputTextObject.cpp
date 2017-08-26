@@ -58,7 +58,9 @@ bool InputTextObject::update(sf::RenderWindow& gWindow, sf::Event& event) {
     if (event.type == sf::Event::TextEntered && isalpha(event.text.unicode)) {
         const sf::String label = this->getText().getString();
         if (current < label.getSize() - 1) {
-            newStr.at(current) = static_cast<char>(std::tolower(event.text.unicode));
+            auto temp = static_cast<char>(event.text.unicode);
+            if (temp < 97) temp += 32; // force lowercase in a portable way
+            newStr.at(current) = temp;
             current++;
             newStr.at(current) = 'A';
             changed = true;

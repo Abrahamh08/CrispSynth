@@ -39,7 +39,10 @@ install(TARGETS crispsynth
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/${LIBRARY_NAME} DESTINATION include)
 
 find_package(Boost COMPONENTS system thread filesystem REQUIRED)
-include_directories(BOOST_INCLUDE_DIRS)
+if (BOOST_FOUND)
+    include_directories(Boost_INCLUDE_DIR)
+    ADD_DEFINITIONS("-DHAS_BOOST")
+endif()
 target_link_libraries(${LIBRARY_NAME} ${Boost_LIBRARIES})
 
 find_package(SFML 2 REQUIRED system window graphics network audio)
@@ -73,7 +76,7 @@ if (ASSIMP_FOUND)
 endif()
 
 set(YAMLCPP_STATIC_LIBRARY TRUE)
-find_package(YamlCpp)
+find_package(Yaml-Cpp)
 if(YAMLCPP_FOUND)
     include_directories(${YAMLCPP_INCLUDE_DIR})
     target_link_libraries(${LIBRARY_NAME} ${YAMLCPP_LIBRARY})
