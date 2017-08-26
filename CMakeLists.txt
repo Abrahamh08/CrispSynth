@@ -40,7 +40,7 @@ install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/${LIBRARY_NAME} DESTINATION includ
 
 find_package(Boost COMPONENTS system thread filesystem REQUIRED)
 if (BOOST_FOUND)
-    include_directories(Boost_INCLUDE_DIR)
+    include_directories(Boost_INCLUDE_DIRS)
     ADD_DEFINITIONS("-DHAS_BOOST")
     target_link_libraries(${LIBRARY_NAME} ${Boost_LIBRARIES})
 endif()
