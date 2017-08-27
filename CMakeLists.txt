@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.0.0)
 
 project(CrispSynth)
 
+add_definitions(-DGLEW_STATIC)
+
 set(LIBRARY_NAME
     crispsynth
 )
@@ -33,24 +35,24 @@ add_library(${LIBRARY_NAME} STATIC
 
 install(TARGETS crispsynth
         LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION bin
+        ARCHIVE DESTINATION lib
 )
 
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/${LIBRARY_NAME} DESTINATION include)
 
-set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost COMPONENTS system thread filesystem REQUIRED)
-if (Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS})
-    ADD_DEFINITIONS(-DHAS_BOOST)
-    add_definitions(-DBOOST_ALL_NO_LIB)
-    target_link_libraries(${LIBRARY_NAME} ${Boost_LIBRARIES})
-endif()
-
+set(SFML_STATIC_LIBRARIES ON)
 find_package(SFML 2 REQUIRED system window graphics network audio)
 if (SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(${LIBRARY_NAME} ${SFML_LIBRARIES})
+    target_link_libraries(${LIBRARY_NAME} ${SFML_DEPENDENCIES})
+endif()
+
+set(YAMLCPP_STATIC_LIBRARY TRUE)
+find_package(YamlCpp)
+if(YAMLCPP_FOUND)
+    include_directories(${YAMLCPP_INCLUDE_DIR})
+    target_link_libraries(${LIBRARY_NAME} ${YAMLCPP_LIBRARY})
 endif()
 
 find_package(OpenGL REQUIRED)
@@ -66,7 +68,7 @@ if (GLEW_FOUND)
     target_link_libraries(${LIBRARY_NAME} ${GLEW_LIBRARIES})
 endif()
 
-find_package(GLM)
+find_package(GLM REQUIRED)
 if (GLM_FOUND)
     include_directories(${GLM_INCLUDE_DIRS})
     target_link_libraries(${LIBRARY_NAME} ${GLM_LIBRARIES})
@@ -78,11 +80,13 @@ if (ASSIMP_FOUND)
     target_link_libraries(${LIBRARY_NAME} ${ASSIMP_LIBRARIES})
 endif()
 
-set(YAMLCPP_STATIC_LIBRARY TRUE)
-find_package(YamlCpp)
-if(YAMLCPP_FOUND)
-    include_directories(${YAMLCPP_INCLUDE_DIR})
-    target_link_libraries(${LIBRARY_NAME} ${YAMLCPP_LIBRARY})
+set(Boost_USE_STATIC_LIBS ON)
+find_package(Boost COMPONENTS system thread filesystem REQUIRED)
+if (Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS})
+    ADD_DEFINITIONS(-DHAS_BOOST)
+    add_definitions(-DBOOST_ALL_NO_LIB)
+    target_link_libraries(${LIBRARY_NAME} ${Boost_LIBRARIES})
 endif()
 
 target_include_directories(${LIBRARY_NAME} PRIVATE
@@ -95,4 +99,4 @@ target_include_directories(${LIBRARY_NAME} PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-ADD_CUSTOM_TARGET(run_install COMMAND ${CMAKE_MAKE_PROGRAM} install)
+add_custom_target(run_install COMMAND ${CMAKE_MAKE_PROGRAM} install)
