@@ -21,7 +21,7 @@ public:
     Button(std::string text, bool autoSize = false);
     void setLabel(std::string text);
     const std::string getText();
-    virtual bool update(sf::RenderWindow& window, sf::Event& event);
+    virtual bool update(sf::RenderWindow& window, sf::Event& event) override;
     virtual void render(sf::RenderWindow& gWindow, float delta) override;
     void setRelativeScale(float mod = .1);
     void updateScale(float scaleX, float scaleY);
