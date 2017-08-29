@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.0)
 
 project(CrispSynth)
 
-add_definitions(-DGLEW_STATIC)
+add_definitions(-Wall -DGLEW_STATIC)
 
 set(LIBRARY_NAME
     crispsynth
@@ -40,7 +40,6 @@ install(TARGETS crispsynth
 
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/${LIBRARY_NAME} DESTINATION include)
 
-set(SFML_STATIC_LIBRARIES ON)
 find_package(SFML 2 REQUIRED system window graphics network audio)
 if (SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
