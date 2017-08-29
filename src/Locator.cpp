@@ -28,7 +28,7 @@ void Locator::provideResourcesService(std::shared_ptr<IResources> service) {
 
 void Locator::provideArgs(char arg[]) {
     Locator::rootPath = boost::filesystem::canonical(arg).remove_filename().parent_path();
-    if (!rootPath.has_filename()) std::cout << "TO-DO";
+    if (!rootPath.has_filename()) std::cout << "TO-DO" << std::endl;
 }
 
 void Locator::provideConfig(std::string path, Configs config) {
