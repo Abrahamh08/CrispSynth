@@ -2,8 +2,8 @@
 // Created by cilan on 2/25/2017.
 //
 
-#ifndef I_AM_SYNTHETIC_C_SFML_BUTTON_H
-#define I_AM_SYNTHETIC_C_SFML_BUTTON_H
+#ifndef CRISPSYNTH_BUTTON_H
+#define CRISPSYNTH_BUTTON_H
 
 #include <string>
 #include <iostream>
@@ -14,6 +14,7 @@
 #include "../game-objects/components/RenderComponent.h"
 #include "../game-objects/GameObject.h"
 #include "../game-objects/SpriteObject.h"
+#include "../Game.h"
 
 class Button : public GameObject {
 public:
@@ -21,8 +22,8 @@ public:
     Button(std::string text, bool autoSize = false);
     void setLabel(std::string text);
     const std::string getText();
-    virtual bool update(sf::RenderWindow& window, sf::Event& event) override;
-    virtual void render(sf::RenderWindow& gWindow, float delta) override;
+    virtual void update(Game &game, sf::Event& event) override;
+    virtual void render(Game &game, float delta) override;
     void setRelativeScale(float mod = .1);
     void updateScale(float scaleX, float scaleY);
     virtual void updatePosition(float x, float y) override;
@@ -50,9 +51,9 @@ protected:
     virtual void sReleaseHandler(){}
     virtual void sHoverHandler(bool first){}
 
-    virtual bool clickHandler(sf::RenderWindow& window){return true;}
-    virtual bool downHandler(){return true;}
-    virtual bool hoverHandler(bool first){return true;}
+    virtual void clickHandler(Game &game){}
+    virtual void downHandler(Game &game){}
+    virtual void hoverHandler(Game &game, bool first) {}
 
     SpriteObject spriteObj_ = SpriteObject();
 

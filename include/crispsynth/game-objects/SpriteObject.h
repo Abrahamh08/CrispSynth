@@ -10,13 +10,14 @@
 #include "components/SpriteComponent.h"
 #include "components/DrawableComponent.h"
 #include "components/RenderComponent.h"
+#include "../Game.h"
 
 class SpriteObject : public GameObject {
 public:
     SpriteObject();
     SpriteObject(const sf::Texture& texture);
-    virtual bool update(sf::RenderWindow& gWindow, sf::Event& event) override { return true; }
-    virtual void render(sf::RenderWindow& gWindow, float delta) override;
+    virtual void update(Game &game, sf::Event& event) override { }
+    virtual void render(Game &game, float delta) override;
     void update(const sf::Texture& texture);
     virtual void updatePosition(float tx, float ty) override; 
     void setRelativeScale(float factor);

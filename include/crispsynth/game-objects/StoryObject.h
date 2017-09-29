@@ -11,16 +11,16 @@
 class StoryObject : public GameObject {
 public:
     StoryObject(std::queue<sf::Texture>& textures);
-    bool update(sf::RenderWindow& gWindow, sf::Event& event) override;
+    virtual void update(Game &game, sf::Event& event) override;
+    virtual void render(Game &game, float delta) override;
     virtual void update() override;
-    void render(sf::RenderWindow& gWindow, float delta) override;
     virtual void updatePosition(float tx, float ty) override;
     void updateScale(float scaleX, float scaleY);
     sf::Sprite& getSprite();
 private:
     SpriteObject spriteObj = SpriteObject();
     std::queue<sf::Texture>& textures_;
-    bool putNext();
+    void putNext();
 };
 
 #endif

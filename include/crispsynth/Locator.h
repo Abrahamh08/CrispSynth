@@ -23,7 +23,7 @@ public:
     static std::shared_ptr<IResources> getResource() { return resourcesService_; }
 
     static void provideResourcesService(std::shared_ptr<IResources> service);
-    static void provideArgs(char* arg);
+    static void provideArgs(char *arg);
     static void provideConfig(std::string path, Configs config);
     static void provideMusic(std::unique_ptr<sf::Music> copyMusic);
     static std::unique_ptr<sf::Music>& getMusic();

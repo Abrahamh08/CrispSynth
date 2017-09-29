@@ -16,8 +16,8 @@ public:
     TextObject();
     TextObject(const std::string label, const sf::Font& font);
     virtual void updatePosition(float tx, float ty) override; 
-    virtual bool update(sf::RenderWindow& gWindow, sf::Event& event) override { return true; };
-    virtual void render(sf::RenderWindow& gWindow, float delta) override;
+    virtual void update(Game &game, sf::Event& event) override { };
+    virtual void render(Game &game, float delta) override;
     void update(const std::string label, const sf::Font& font);
     void updateText(const std::string label);
     void updateScale(const float x, const float y);

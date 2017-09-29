@@ -11,7 +11,7 @@
 class DrawableComponent : public Component {
 public:
     using Component::Component;
-    virtual void draw(sf::RenderWindow& window) = 0;
+    virtual void draw(Game &game) = 0;
 };
 
 #endif

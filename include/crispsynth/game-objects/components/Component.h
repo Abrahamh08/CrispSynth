@@ -5,12 +5,13 @@
 #ifndef I_AM_SYNTHETIC_C_SFML_COMPONENT_H
 #define I_AM_SYNTHETIC_C_SFML_COMPONENT_H
 
+#include "crispsynth/Game.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 
 class Component {
 public:
     Component();
-    virtual void update(sf::RenderWindow& window, uint16_t delta) {};
+    virtual void update(Game &game, uint16_t delta) {};
 };
 
 #endif

@@ -10,20 +10,17 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include "../buttons/Button.h"
 #include "../game-objects/GameObject.h"
+#include "../Game.h"
 
 class Scene {
 public:
-    Scene();
-    virtual void loop(sf::RenderWindow& window, std::string title);
-    virtual void loop(sf::RenderWindow& window);
+    Scene(Game &game);
+    virtual void updateObjects(sf::Event &event);
+    virtual void renderObjects(float delta);
+    virtual void onEnter() {};
 protected:
-    virtual bool updateObjects(sf::RenderWindow& gWindow, sf::Event& event);
-    virtual void renderObjects(sf::RenderWindow& window, float delta);
-    std::string title;
     std::vector<std::shared_ptr<GameObject>> gameObjects;
-    uint16_t width, height;
-    bool fullscreen;
-    sf::Time timePerFrame = sf::seconds(1.f / 144.f);
+    Game &game;
 };
 
 #endif

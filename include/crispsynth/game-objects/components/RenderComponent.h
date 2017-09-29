@@ -15,7 +15,7 @@ public:
     RenderComponent();
 
     using Component::update;
-    virtual void update(sf::RenderWindow& window, std::vector<std::weak_ptr<DrawableComponent>>&);
+    virtual void update(Game &game, std::vector<std::weak_ptr<DrawableComponent>>&);
 };
 
 #endif

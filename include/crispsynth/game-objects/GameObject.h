@@ -8,6 +8,7 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include "components/Component.h"
+#include "../Game.h"
 
 class GameObject {
 protected:
@@ -16,8 +17,8 @@ protected:
     virtual void update() {};
 public:
     float &x = _x, &y = _y, &w = width, &h = height, &sX = _sX, &sY = _sY;
-    virtual bool update(sf::RenderWindow& window, sf::Event& event) = 0;
-    virtual void render(sf::RenderWindow& gWindow, float delta) {};
+    virtual void update(Game &game, sf::Event& event) = 0;
+    virtual void render(Game &game, float delta) {};
     virtual void updatePosition(float tx, float ty) = 0;
 };
 
