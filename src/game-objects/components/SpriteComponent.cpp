@@ -12,6 +12,6 @@ void SpriteComponent::update(const sf::Texture& texture) {
     sprite.setTexture(texture);
 }
 
-void SpriteComponent::draw(sf::RenderWindow& window) {
-    window.draw(sprite);
+void SpriteComponent::draw(Game &game) {
+    game.window.draw(sprite);
 }

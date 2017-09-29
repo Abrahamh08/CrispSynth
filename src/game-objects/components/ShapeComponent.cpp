@@ -12,6 +12,6 @@ void ShapeComponent::update(sf::Shape& shape) {
     this->shape = &shape;
 }
 
-void ShapeComponent::draw(sf::RenderWindow& window) {
-    window.draw(*shape);
+void ShapeComponent::draw(Game &game) {
+    game.window.draw(*shape);
 }

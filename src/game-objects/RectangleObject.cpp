@@ -49,8 +49,8 @@ void RectangleObject::updateSize(float width, float height) {
     this->update();
 }
 
-void RectangleObject::render(sf::RenderWindow& gWindow, float delta) {
-    render_->update(gWindow, drawableComponents);
+void RectangleObject::render(Game &game, float delta) {
+    render_->update(game, drawableComponents);
 }
 
 sf::RectangleShape& RectangleObject::getShape() {

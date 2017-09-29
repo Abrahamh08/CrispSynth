@@ -46,8 +46,8 @@ void TextObject::updatePosition(float tx, float ty) {
     this->update();
 }
 
-void TextObject::render(sf::RenderWindow& gWindow, float delta) {
-    render_->update(gWindow, drawableComponents);
+void TextObject::render(Game &game, float delta) {
+    render_->update(game, drawableComponents);
 }
 
 sf::Text& TextObject::getText() {

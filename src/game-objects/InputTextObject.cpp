@@ -52,8 +52,8 @@ void InputTextObject::updatePosition(float tx, float ty) {
     this->update();
 }
 
-bool InputTextObject::update(sf::RenderWindow& gWindow, sf::Event& event) {
-    textObj.update(gWindow, event);
+void InputTextObject::update(Game &game, sf::Event& event) {
+    textObj.update(game, event);
     bool changed = false;
     std::string newStr = this->getText().getString();
     if (event.type == sf::Event::TextEntered && isalpha(event.text.unicode)) {
@@ -106,11 +106,10 @@ bool InputTextObject::update(sf::RenderWindow& gWindow, sf::Event& event) {
     if (changed) {
         this->updateText(newStr);
     }
-    return true;
 }
 
-void InputTextObject::render(sf::RenderWindow& gWindow, float delta) {
-    textObj.render(gWindow, delta);
+void InputTextObject::render(Game &game, float delta) {
+    textObj.render(game, delta);
 }
 
 sf::Text& InputTextObject::getText() {

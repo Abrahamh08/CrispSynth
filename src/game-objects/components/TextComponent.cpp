@@ -17,6 +17,6 @@ void TextComponent::update(const std::string label) {
     text.setString(label);
 }
 
-void TextComponent::draw(sf::RenderWindow& window) {
-    window.draw(text);
+void TextComponent::draw(Game &game) {
+    game.window.draw(text);
 }

@@ -12,6 +12,6 @@ void RectangleComponent::update(const sf::Texture* texture) {
     this->shape.setTexture(texture);
 }
 
-void RectangleComponent::draw(sf::RenderWindow& window) {
-    window.draw(shape);
+void RectangleComponent::draw(Game &game) {
+    game.window.draw(shape);
 }

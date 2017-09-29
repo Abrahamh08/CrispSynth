@@ -46,8 +46,8 @@ void SpriteObject::updatePosition(float tx, float ty) {
     this->update();
 }
 
-void SpriteObject::render(sf::RenderWindow& gWindow, float delta) {
-    render_->update(gWindow, drawableComponents);
+void SpriteObject::render(Game &game, float delta) {
+    render_->update(game, drawableComponents);
 }
 
 sf::Sprite& SpriteObject::getSprite() {

@@ -17,23 +17,24 @@ void StoryObject::update() {
     _sY = this->getSprite().getScale().y;
 }
 
-bool StoryObject::update(sf::RenderWindow &window, sf::Event &event) {
+void StoryObject::update(Game &game, sf::Event &event) {
     if (event.type == sf::Event::MouseButtonReleased || event.type == sf::Event::KeyReleased) {
         textures_.pop();
-        return putNext();
+        putNext();
     }
-    return true;
 }
 
-bool StoryObject::putNext() {
-    if (textures_.empty()) return false;
-    spriteObj.update(textures_.front());
-    this->update();
-    return true;
+void StoryObject::putNext() {
+    if (textures_.empty()) {
+        // to do
+    } else {
+        spriteObj.update(textures_.front());
+        this->update();
+    }
 }
 
-void StoryObject::render(sf::RenderWindow &gWindow, float delta) {
-    spriteObj.render(gWindow, delta);
+void StoryObject::render(Game &game, float delta) {
+    spriteObj.render(game, delta);
 }
 
 void StoryObject::updateScale(float scaleX, float scaleY) {
