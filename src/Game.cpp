@@ -1,9 +1,19 @@
 #include "crispsynth/Game.h"
 #include "crispsynth/scenes/Scene.h"
 
+Game::Game(sf::RenderWindow &window, bool isView) : window(window) {
+    this->view = isView;
+    if (this->view) {
+        this->fullscreen = config["video"]["fullscreen"].as<bool>();
+        update();
+    }
+}
+
 Game::Game(sf::RenderWindow &window) : window(window) {
-    this->fullscreen = config["video"]["fullscreen"].as<bool>();
-    update();
+    if (!this->view) {
+        this->fullscreen = config["video"]["fullscreen"].as<bool>();
+        update();
+    }
 }
 
 void Game::update() {
