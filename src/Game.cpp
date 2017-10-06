@@ -3,7 +3,7 @@
 
 Game::Game(sf::RenderWindow &window, bool isView) : window(window) {
     this->view = isView;
-    if (this->view) {
+    if (!this->view) {
         this->fullscreen = config["video"]["fullscreen"].as<bool>();
         update();
     }

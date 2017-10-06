@@ -9,6 +9,7 @@ class Scene;
 class Game {
 public:
     Game(sf::RenderWindow &window);
+    Game(sf::RenderWindow &window, bool isView);
     std::shared_ptr<Scene> currentScene;
     std::shared_ptr<Scene> previousScene;
     std::shared_ptr<Scene> transitionScene;
@@ -16,6 +17,7 @@ public:
     sf::RenderWindow &window;
     void update();
     sf::Time timePerFrame;
+    bool view = false;
 protected:
     YAML::Node &config = Locator::currentConfig;
 };
