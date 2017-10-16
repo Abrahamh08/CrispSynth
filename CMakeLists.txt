@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.0)
 
 project(CrispSynth)
 
-add_definitions(-Wall -DGLEW_STATIC)
+add_definitions(-Wall)
 
 set(LIBRARY_NAME
     crispsynth
@@ -58,13 +58,6 @@ find_package(OpenGL REQUIRED)
 if (OPENGL_FOUND)
     include_directories(${OPENGL_INCLUDE_DIR})
     target_link_libraries(${LIBRARY_NAME} ${OPENGL_LIBRARIES})
-endif()
-
-set(GLEW_USE_STATIC_LIBS ON)
-find_package(GLEW REQUIRED)
-if (GLEW_FOUND)
-    include_directories(${GLEW_INCLUDE_DIRS})
-    target_link_libraries(${LIBRARY_NAME} ${GLEW_LIBRARIES})
 endif()
 
 find_package(GLM REQUIRED)

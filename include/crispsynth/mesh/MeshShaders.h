@@ -1,7 +1,7 @@
 #ifndef MESHSHADERS_H
 #define MESHSHADERS_H
 
-#include <GL/glew.h>
+#include "glad/glad.h"
 
 class MeshShaders {
 public:

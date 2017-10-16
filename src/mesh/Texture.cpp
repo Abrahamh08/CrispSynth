@@ -3,7 +3,7 @@
 //
 
 #include "crispsynth/mesh/Texture.h"
-#include <GL/glew.h>
+#include "glad/glad.h"
 #include <SFML/OpenGL.hpp>
 #include <iostream>
 
