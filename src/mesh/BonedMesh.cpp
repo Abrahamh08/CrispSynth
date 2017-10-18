@@ -274,7 +274,7 @@ bool BonedMesh::initFromScene(const aiScene* pScene) {
         entry.numIndices = pScene->mMeshes[i]->mNumFaces * 3;
         entry.baseVertex = numVertices;
         entry.baseIndex = numIndices;
-        
+
         numVertices += pScene->mMeshes[i]->mNumVertices;
         numIndices += entry.numIndices;
 
@@ -366,7 +366,7 @@ bool BonedMesh::initFromScene(const aiScene* pScene) {
     glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(VertexBoneData), (const GLvoid*)48);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Buffers[INDEX_BUFFER]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices[0]) * indices.size(), &indices[0], GL_STATIC_DRAW); 
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices[0]) * indices.size(), &indices[0], GL_STATIC_DRAW);
 
     return glGetError() == GL_NO_ERROR;
 }
