@@ -304,9 +304,9 @@ bool BonedMesh::initFromScene(const aiScene* pScene) {
         for (unsigned int j = 0; j < meshy->mNumFaces; ++j) {
             const aiFace& fase = meshy->mFaces[j];
             assert(fase.mNumIndices == 3);
-            indices.push_back(fase.mIndices[0]);
-            indices.push_back(fase.mIndices[1]);
-            indices.push_back(fase.mIndices[2]);
+            indices.push_back(fase.mIndices[0] + m_Entries[i].baseVertex);
+            indices.push_back(fase.mIndices[1] + m_Entries[i].baseVertex);
+            indices.push_back(fase.mIndices[2] + m_Entries[i].baseVertex);
         }
 
         for (unsigned int j = 0; j < meshy->mNumBones; ++j) {
@@ -376,7 +376,7 @@ void BonedMesh::draw() {
 
     for (const auto &mesh : m_Entries) {
         m_Textures[mesh.materialIndex]->bind(GL_TEXTURE0);
-        glDrawElementsBaseVertex(GL_TRIANGLES, mesh.numIndices, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * mesh.baseIndex), mesh.baseVertex);
+        glDrawElements(GL_TRIANGLES, mesh.numIndices, GL_UNSIGNED_INT, (void*)(sizeof(GLuint) * mesh.baseIndex));
     }
 
     glBindVertexArray(0);
