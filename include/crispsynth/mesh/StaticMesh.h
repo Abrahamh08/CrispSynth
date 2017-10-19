@@ -9,7 +9,7 @@
 #include "IMesh.h"
 #include "Texture.h"
 
-#include "glad/glad.h"
+#include "../glad/glad.h"
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
 #include <glm/gtc/type_ptr.hpp>
