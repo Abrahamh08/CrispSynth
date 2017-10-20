@@ -2,7 +2,7 @@
 #include <iostream>
 
 GLuint MeshShaders::staticMeshShaderProgram;
-GLuint MeshShaders::bonedMeshShaderProgram; 
+GLuint MeshShaders::bonedMeshShaderProgram;
 GLuint* MeshShaders::currentProgram = nullptr;
 
 void MeshShaders::createStaticShader() {

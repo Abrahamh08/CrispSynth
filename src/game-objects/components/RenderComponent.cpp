@@ -9,5 +9,5 @@ void RenderComponent::update(Game &game, std::vector<std::weak_ptr<DrawableCompo
        if (auto spt = component.lock()) {
            spt->draw(game);
        }
-    } 
+    }
 }

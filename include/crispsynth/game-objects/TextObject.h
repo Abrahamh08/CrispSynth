@@ -15,7 +15,7 @@ class TextObject : public GameObject {
 public:
     TextObject();
     TextObject(const std::string label, const sf::Font& font);
-    virtual void updatePosition(float tx, float ty) override; 
+    virtual void updatePosition(float tx, float ty) override;
     virtual void update(Game &game, sf::Event& event) override { };
     virtual void render(Game &game, float delta) override;
     void update(const std::string label, const sf::Font& font);
