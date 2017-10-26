@@ -17,8 +17,8 @@ public:
     virtual bool loadFromFile(boost::filesystem::path path, std::map<std::string, Texture>& textures) = 0;
     virtual bool initFromScene(const aiScene* pScene) = 0;
     virtual void draw() = 0;
-protected:
     std::map<std::string, Texture>* textures;
+protected:
     boost::filesystem::path path;
 };
 

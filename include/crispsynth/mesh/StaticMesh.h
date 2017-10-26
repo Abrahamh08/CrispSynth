@@ -38,9 +38,6 @@ enum VB_TYPES {
     NUM_VBs
 };
 
-    GLuint m_VAO;
-    GLuint m_Buffers[NUM_VBs];
-
     bool initMaterials(const aiScene* pScene);
     const aiScene* m_pScene;
     Assimp::Importer m_importer;
@@ -55,6 +52,9 @@ enum VB_TYPES {
 
     std::vector<MeshEntry> m_Entries;
     std::vector<Texture*> m_Textures;
+public:
+    GLuint m_VAO;
+    GLuint m_Buffers[NUM_VBs];
 };
 
-#endif
+#endif // StaticMesh.h

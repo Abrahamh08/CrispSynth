@@ -41,9 +41,6 @@ enum VB_TYPES {
     NUM_VBs
 };
 
-    GLuint m_VAO;
-    GLuint m_Buffers[NUM_VBs];
-
     unsigned int findRotation(float AnimationTime, const aiNodeAnim* pNodeAnim);
     unsigned int findPosition(float AnimationTime, const aiNodeAnim* pNodeAnim);
     void calcInterpolatedRotation(aiQuaternion& Out, float AnimationTime, const aiNodeAnim* pNodeAnim);
@@ -78,7 +75,9 @@ enum VB_TYPES {
         glm::mat4 boneOffset;
         glm::mat4 finalTransformation;
     };
-
+public:
+    GLuint m_VAO;
+    GLuint m_Buffers[NUM_VBs];
     GLuint numBones = 0;
     std::map<std::string, GLuint> m_boneMapping;
     std::vector<BoneInfo> m_boneInfo;
@@ -88,4 +87,4 @@ enum VB_TYPES {
     std::vector<Texture*> m_Textures;
 };
 
-#endif
+#endif // BonedMesh.h
