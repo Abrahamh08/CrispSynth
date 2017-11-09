@@ -162,7 +162,7 @@ void MeshShaders::createBonedShader() {
 
     glGetProgramiv(bonedMeshShaderProgram, GL_LINK_STATUS, &success);
     if (!success) {
-        glGetProgramInfoLog(staticMeshShaderProgram, 512, NULL, infoLog);
+        glGetProgramInfoLog(bonedMeshShaderProgram, 512, NULL, infoLog);
         std::cout << "ERROR::SHADER::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
     }
     glDeleteShader(VS);
