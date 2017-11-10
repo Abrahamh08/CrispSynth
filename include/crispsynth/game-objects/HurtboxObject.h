@@ -23,8 +23,8 @@ public:
     int currentFrame();
     HurtboxComponent *currentHurtbox = nullptr;
 private:
-    int currentFrame_ = -1;
-    std::vector<std::shared_ptr<HurtboxComponent>> hurtboxFrames_ = {};
+    int currentFrame_ = 0;
+    std::vector<std::shared_ptr<HurtboxComponent>> hurtboxFrames_ = {std::make_shared<HurtboxComponent>()};
     void updateHurtboxFrame();
 protected:
     std::vector<std::shared_ptr<Component>> components = {hurtboxFrames_[currentFrame_]};
