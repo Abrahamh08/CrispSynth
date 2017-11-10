@@ -216,7 +216,7 @@ void BonedMesh::ReadNodeHierarchy(float AnimationTime, const aiNode* pNode, cons
 
     if (m_boneMapping.find(NodeName) != m_boneMapping.end()) {
         unsigned int boneIndex = m_boneMapping[NodeName];
-        m_boneInfo[boneIndex].finalTransformation = m_globalInverseTransform * GlobalTransformation
+        m_boneInfo[boneIndex].finalTransformation = aiMatrix4x4ToGlm(&m_GlobalInverseTransform) * GlobalTransformation
                                                                 * m_boneInfo[boneIndex].boneOffset;
     }
 
