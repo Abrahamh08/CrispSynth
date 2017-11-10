@@ -21,11 +21,12 @@ public:
     void prevFrame();
     void nextFrame();
     int currentFrame();
-    HurtboxComponent *currentHurtbox = nullptr;
 private:
     int currentFrame_ = 0;
     std::vector<std::shared_ptr<HurtboxComponent>> hurtboxFrames_ = {std::make_shared<HurtboxComponent>()};
     void updateHurtboxFrame();
+public:
+    HurtboxComponent *currentHurtbox = hurtboxFrames_[0].get();
 protected:
     std::vector<std::shared_ptr<Component>> components = {hurtboxFrames_[currentFrame_]};
 };
