@@ -64,8 +64,9 @@ void HurtboxObject::nextFrame() {
 void HurtboxObject::prevFrame() {
     if (currentFrame_ <= 0) {
         this->currentFrame_ = this->hurtboxFrames_.size() - 1;
+    } else {
+        this->currentFrame_--;
     }
-
     if (!this->hurtboxFrames_[this->currentFrame_]) {
         this->hurtboxFrames_[this->currentFrame_] = std::make_shared<HurtboxComponent>();
     }
