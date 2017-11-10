@@ -70,12 +70,12 @@ enum VB_TYPES {
                baseVertex,
                baseIndex;
     };
-
+public:
     struct BoneInfo {
         glm::mat4 boneOffset;
         glm::mat4 finalTransformation;
     };
-public:
+
     GLuint m_VAO;
     GLuint m_Buffers[NUM_VBs];
     GLuint numBones = 0;
