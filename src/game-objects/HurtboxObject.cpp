@@ -54,21 +54,16 @@ void HurtboxObject::gotoFrame(int n) {
 void HurtboxObject::nextFrame() {
     this->currentFrame_++;
     if ((unsigned) this->currentFrame_ >= this->hurtboxFrames_.size()) {
-        this->hurtboxFrames_[this->currentFrame_] = std::make_shared<HurtboxComponent>();
+        this->hurtboxFrames_.emplace_back(std::make_shared<HurtboxComponent>());
     }
     this->updateHurtboxFrame();
 }
 
 void HurtboxObject::prevFrame() {
-    if (currentFrame_ <= 0) {
-        this->currentFrame_ = this->hurtboxFrames_.size() - 1;
-    } else {
+    if (currentFrame_ > 0) {
         this->currentFrame_--;
+        this->updateHurtboxFrame();
     }
-    if ((unsigned) this->currentFrame_ >= this->hurtboxFrames_.size()) {
-        this->hurtboxFrames_[this->currentFrame_] = std::make_shared<HurtboxComponent>();
-    }
-    this->updateHurtboxFrame();
 }
 
 #endif // HURTBOXOBJECT_CPP
