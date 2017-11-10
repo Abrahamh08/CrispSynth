@@ -14,7 +14,7 @@ class HurtboxObject : public GameObject {
 public:
     HurtboxObject();
     HurtboxObject(float x, float y, float z, float sx, float sy, float sz);
-    HurtboxObject(const sf::Texture& texture);
+    virtual void update(Game &game, sf::Event& event) override;
     virtual void updatePosition(float x, float y, float z) override;
     void updateScale(float x, float y, float z);
     void gotoFrame(int n);
