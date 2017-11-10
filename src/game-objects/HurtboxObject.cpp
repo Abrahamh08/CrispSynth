@@ -34,7 +34,6 @@ int HurtboxObject::currentFrame() {
 }
 
 void HurtboxObject::updateHurtboxFrame() {
-    this->currentFrame_ = this->hurtboxFrames_.size() - 1;
     this->currentHurtbox = hurtboxFrames_[currentFrame_].get();
     this->_sX = this->currentHurtbox->sX;
     this->_sY = this->currentHurtbox->sY;
@@ -57,7 +56,6 @@ void HurtboxObject::nextFrame() {
     if (!this->hurtboxFrames_[this->currentFrame_]) {
         this->hurtboxFrames_[this->currentFrame_] = std::make_shared<HurtboxComponent>();
     }
-
     this->updateHurtboxFrame();
 }
 
