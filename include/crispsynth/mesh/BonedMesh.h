@@ -32,9 +32,7 @@ public:
 private:
 #define INVALID_MATERIAL 0xFFFFFFFF
 
-enum VB_TYPES {
-    POS_VB,
-    TEXCOORD_VB,
+enum VB_TYPES { POS_VB, TEXCOORD_VB,
     NORMAL_VB,
     BONE_VB,
     INDEX_BUFFER,
@@ -51,7 +49,6 @@ enum VB_TYPES {
     const aiNodeAnim* findNodeAnim(const aiAnimation* pAnimation, const std::string NodeName);
 
     bool initMaterials(const aiScene* pScene);
-    const aiScene* m_pScene;
     Assimp::Importer m_importer;
     aiMatrix4x4 m_GlobalInverseTransform;
 
@@ -76,6 +73,8 @@ public:
         glm::mat4 finalTransformation;
     };
 
+    const aiScene* m_pScene;
+
     GLuint m_VAO;
     GLuint m_Buffers[NUM_VBs];
     GLuint numBones = 0;
@@ -85,6 +84,10 @@ public:
 
     std::vector<MeshEntry> m_Entries;
     std::vector<Texture*> m_Textures;
+
+    void its_unnecessary_overhead(float TimeInSeconds, std::vector<glm::mat4>& Transforms);
+    void testerino(float AnimationTime, const aiNode* pNode, const glm::mat4& ParentTransform);
+
 };
 
 #endif // BonedMesh.h
