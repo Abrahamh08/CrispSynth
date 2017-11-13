@@ -216,8 +216,7 @@ void BonedMesh::ReadNodeHierarchy(float AnimationTime, const aiNode* pNode, cons
 
     if (m_boneMapping.find(NodeName) != m_boneMapping.end()) {
         unsigned int boneIndex = m_boneMapping[NodeName];
-        m_boneInfo[boneIndex].finalTransformation = aiMatrix4x4ToGlm(&m_GlobalInverseTransform) * GlobalTransformation
-                                                                * m_boneInfo[boneIndex].boneOffset;
+        m_boneInfo[boneIndex].finalTransformation = aiMatrix4x4ToGlm(&m_GlobalInverseTransform) * GlobalTransformation;
     }
 
     for (unsigned int i = 0; i < pNode->mNumChildren; i++) {
@@ -394,72 +393,4 @@ const aiNodeAnim* BonedMesh::findNodeAnim(const aiAnimation* pAnimation, const s
     }
 
     return nullptr;
-}
-
-// hax
-
-void BonedMesh::its_unnecessary_overhead(float TimeInSeconds, std::vector<glm::mat4>& Transforms)
-{
-    Transforms.resize(numBones); // 5 is max meshes
-    glm::mat4 Identity = glm::mat4(1.0); // 1.0 is redundant but was added for understanding
-
-    float TicksPerSecond = m_pScene->mAnimations[0]->mTicksPerSecond != 0 ?
-                               m_pScene->mAnimations[0]->mTicksPerSecond : 25.0f;
-    float TimeInTicks = TimeInSeconds * TicksPerSecond;
-    float AnimationTime = fmod(TimeInTicks, m_pScene->mAnimations[0]->mDuration);
-
-    testerino(AnimationTime, m_pScene->mRootNode, Identity);
-
-    for (unsigned int i = 0; i < numBones; ++i) {
-        Transforms[i] = m_boneInfo[i].finalTransformation;
-    }
-}
-
-void BonedMesh::testerino(float AnimationTime, const aiNode* pNode, const glm::mat4& ParentTransform)
-{
-    std::string NodeName(pNode->mName.data);
-
-    const aiAnimation *pAnimation = m_pScene->mAnimations[0]; // TODO
-
-    glm::mat4 nodeTransformation(aiMatrix4x4ToGlm(&pNode->mTransformation));
-
-    const aiNodeAnim *pNodeAnim = findNodeAnim(pAnimation, NodeName);
-
-    if (pNodeAnim != nullptr) {
-        // Interpolate scaling and generate scaling transformation matrix
-        aiVector3D Scaling;
-        calcInterpolatedScaling(Scaling, AnimationTime, pNodeAnim);
-        glm::mat4 ScalingM = glm::scale(glm::vec3(Scaling.x, Scaling.y, Scaling.z));
-
-        // Interpolate rotation and generate rotation transformation matrix
-        aiQuaternion RotationQ;
-        calcInterpolatedRotation(RotationQ, AnimationTime, pNodeAnim);
-        const aiMatrix4x4t<float> tempMat(RotationQ.GetMatrix());
-        glm::mat4 RotationM = aiMatrix4x4ToGlm(&tempMat);
-
-        // Interpolate translation and generate translation transformation matrix
-        aiVector3D Translation;
-        calcInterpolatedPosition(Translation, AnimationTime, pNodeAnim);
-        glm::mat4 TranslationM = glm::translate(glm::vec3(Translation.x, Translation.y, Translation.z));
-
-        // Combine the above transformations
-        nodeTransformation = TranslationM * RotationM * ScalingM;
-    }
-
-    glm::mat4 GlobalTransformation = ParentTransform * nodeTransformation;
-
-    if (m_boneMapping.find(NodeName) != m_boneMapping.end()) {
-        unsigned int boneIndex = m_boneMapping[NodeName];
-        //m_boneInfo[boneIndex].finalTransformation = aiMatrix4x4ToGlm(&m_GlobalInverseTransform) * glm::inverse(GlobalTransformation)
-        //                                                    * m_boneInfo[boneIndex].boneOffset;
-        //m_boneInfo[boneIndex].finalTransformation = glm::inverse(GlobalTransformation); //* glm::inverse(m_boneInfo[boneIndex].boneOffset);
-
-        // sorta works
-        //m_boneInfo[boneIndex].finalTransformation = glm::inverse(m_boneInfo[boneIndex].boneOffset);
-        m_boneInfo[boneIndex].finalTransformation = aiMatrix4x4ToGlm(&m_GlobalInverseTransform) * GlobalTransformation;
-    }
-
-    for (unsigned int i = 0; i < pNode->mNumChildren; i++) {
-        testerino(AnimationTime, pNode->mChildren[i], GlobalTransformation);
-    }
 }

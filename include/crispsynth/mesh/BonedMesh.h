@@ -85,8 +85,8 @@ public:
     std::vector<MeshEntry> m_Entries;
     std::vector<Texture*> m_Textures;
 
-    void its_unnecessary_overhead(float TimeInSeconds, std::vector<glm::mat4>& Transforms);
-    void testerino(float AnimationTime, const aiNode* pNode, const glm::mat4& ParentTransform);
+    /*void its_unnecessary_overhead(float TimeInSeconds, std::vector<glm::mat4>& Transforms);
+    void testerino(float AnimationTime, const aiNode* pNode, const glm::mat4& ParentTransform);*/
 
 };
 
