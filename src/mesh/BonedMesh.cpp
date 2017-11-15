@@ -56,11 +56,13 @@ bool BonedMesh::initMaterials(const aiScene* pScene) {
         aiString texturePath;
         pScene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath, nullptr, nullptr, nullptr, nullptr, nullptr);
         if (std::string(texturePath.C_Str()).empty()) {
-            texturePath = aiString((Locator::rootPath / "assets/images/standard/white.png").string());
+            texturePath = aiString((Locator::rootPath / "assets/standard/white.png").string());
+        } else {
+            texturePath = aiString((path.parent_path() / texturePath.C_Str()).string());
         }
 
         if (textures->find(texturePath.C_Str()) == textures->end()) {
-            Texture texture(GL_TEXTURE_2D, (path.parent_path() / texturePath.C_Str()).string());
+            Texture texture(GL_TEXTURE_2D, texturePath.C_Str());
             texture.load();
             textures->emplace(texturePath.C_Str(), std::move(texture));
         }
@@ -185,7 +187,7 @@ void BonedMesh::ReadNodeHierarchy(float AnimationTime, const aiNode* pNode, cons
 {
     std::string NodeName(pNode->mName.data);
 
-    const aiAnimation *pAnimation = m_pScene->mAnimations[0]; // TODO
+    const aiAnimation *pAnimation = m_pScene->mAnimations[1]; // TODO
 
     glm::mat4 nodeTransformation(aiMatrix4x4ToGlm(&pNode->mTransformation));
 
@@ -229,10 +231,12 @@ void BonedMesh::boneTransform(float TimeInSeconds, std::vector<glm::mat4>& Trans
     Transforms.resize(numBones); // 5 is max meshes
     glm::mat4 Identity = glm::mat4(1.0); // 1.0 is redundant but was added for understanding
 
-    float TicksPerSecond = m_pScene->mAnimations[0]->mTicksPerSecond != 0 ?
-                               m_pScene->mAnimations[0]->mTicksPerSecond : 25.0f;
+    //std::cout << m_pScene->mNumAnimations << std::endl;
+
+    float TicksPerSecond = m_pScene->mAnimations[1]->mTicksPerSecond != 0 ?
+                               m_pScene->mAnimations[1]->mTicksPerSecond : 25.0f;
     float TimeInTicks = TimeInSeconds * TicksPerSecond;
-    float AnimationTime = fmod(TimeInTicks, m_pScene->mAnimations[0]->mDuration);
+    float AnimationTime = fmod(TimeInTicks, m_pScene->mAnimations[1]->mDuration);
 
     ReadNodeHierarchy(AnimationTime, m_pScene->mRootNode, Identity);
 
