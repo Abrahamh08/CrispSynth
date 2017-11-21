@@ -2,7 +2,7 @@
 // Created by cilan on 11/07/2017
 //
 
-#ifndef HITTBOXOBJECT_CPP
+#ifndef HITBOXOBJECT_CPP
 #define HITBOXOBJECT_CPP
 
 #include "crispsynth/game-objects/HitboxObject.h"
