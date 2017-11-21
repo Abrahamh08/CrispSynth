@@ -16,7 +16,7 @@ public:
     HitboxObject(float x, float y, float z, float sx, float sy, float sz, float h);
     virtual void update(Game &game, sf::Event& event) override {};
     virtual void updatePosition(float x, float y, float z) override;
-    void updateHeight(float h);
+    void updateRadius(float r);
     void gotoFrame(int n);
     void prevFrame();
     void nextFrame();
@@ -25,6 +25,7 @@ private:
     int currentFrame_ = 0;
     std::vector<std::shared_ptr<HitboxComponent>> hitboxFrames_ = {std::make_shared<HitboxComponent>()};
     void updateHitboxFrame();
+    float r;
 public:
     HitboxComponent *currentHitbox = hitboxFrames_[0].get();
 protected:

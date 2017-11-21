@@ -13,9 +13,8 @@ public:
 
     using Component::update;
     void updatePosition(float x, float y, float z);
-    void updateHeight(float h);
     void updateFrame(uint16_t transitionFrame);
-    float x, y, z, sX, sY, sZ, h;
+    float x, y, z;
 };
 
 #endif // HITBOXCOMPONENT_H

@@ -11,9 +11,9 @@ HitboxObject::HitboxObject() {
     // do nothing
 }
 
-HitboxObject::HitboxObject(float x, float y, float z, float sx, float sy, float sz, float h) {
+HitboxObject::HitboxObject(float x, float y, float z, float sx, float sy, float sz, float r) {
     this->updatePosition(x, y, z);
-    this->updateHeight(h);
+    this->updateRadius(r);
 }
 
 void HitboxObject::updatePosition(float x, float y, float z) {
@@ -21,11 +21,6 @@ void HitboxObject::updatePosition(float x, float y, float z) {
     this->_x = this->currentHitbox->x;
     this->_y = this->currentHitbox->y;
     this->_z = this->currentHitbox->z;
-}
-
-void HitboxObject::updateHeight(float h) {
-    this->currentHitbox->updateHeight(h);
-    this->height = this->currentHitbox->h;
 }
 
 int HitboxObject::currentFrame() {
@@ -37,7 +32,6 @@ void HitboxObject::updateHitboxFrame() {
     this->_x = this->currentHitbox->x;
     this->_y = this->currentHitbox->y;
     this->_z = this->currentHitbox->z;
-    this->height = this->currentHitbox->h;
 }
 
 void HitboxObject::gotoFrame(int n) {
@@ -61,6 +55,10 @@ void HitboxObject::prevFrame() {
         this->currentFrame_--;
         this->updateHitboxFrame();
     }
+}
+
+void HitboxObject::updateRadius(float r) {
+    this->r = r;
 }
 
 #endif // HITTBOXOBJECT_CPP
