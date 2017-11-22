@@ -5,8 +5,8 @@
 #ifndef I_AM_SYNTHETIC_C_SFML_COMPONENT_H
 #define I_AM_SYNTHETIC_C_SFML_COMPONENT_H
 
-#include "crispsynth/Game.h"
 #include <SFML/Graphics/RenderWindow.hpp>
+#include "../../Game.h"
 
 class Component {
 public:

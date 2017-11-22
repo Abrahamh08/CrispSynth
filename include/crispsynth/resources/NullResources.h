@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "IResources.h"
+#include "../game-objects/BoxCollection.h"
 
 class NullResources : public IResources {
 public:
@@ -17,6 +18,7 @@ public:
     virtual std::string loadPath(std::string state) override;
     virtual sf::Font loadFont(std::string id) override;
     virtual sf::Image loadImage(std::string state, std::string id) override;
+    virtual BoxCollection loadBoxes(std::string group, std::string id) override;
 };
 
 #endif

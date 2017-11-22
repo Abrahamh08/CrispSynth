@@ -89,3 +89,8 @@ sf::Image LocalResources::loadImage(std::string state, std::string id) {
 
     return returnImage;
 }
+
+BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
+    // load box collection and return thing
+    return BoxCollection();
+}

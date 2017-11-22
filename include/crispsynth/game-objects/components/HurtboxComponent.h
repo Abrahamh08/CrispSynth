@@ -7,16 +7,16 @@
 
 #include "Component.h"
 
-class HurtboxComponent : public Component {
+class HurtboxComponent {
 public:
     HurtboxComponent();
 
-    using Component::update;
     void updatePosition(float x, float y, float z);
     void updateScale(float sX, float sY);
     void updateHeight(float h);
+    void updateRadius(float r);
     void updateFrame(uint16_t transitionFrame);
-    float x, y, z, sX, sY, sZ, h;
+    float x, y, z, sX, sY, sZ, h, r;
 };
 
 #endif // HURTBOXCOMPONENT_H

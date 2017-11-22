@@ -50,3 +50,9 @@ sf::Image NullResources::loadImage(std::string state, std::string id) {
     std::cout << "null image being loaded named " << id << std::endl;
     return sf::Image();
 }
+
+BoxCollection NullResources::loadBoxes(std::string group, std::string id) {
+    // load box collection and return thing
+    std::cout << "null box collection being loaded named " << id << std::endl;
+    return BoxCollection();
+}

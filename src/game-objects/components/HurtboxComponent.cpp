@@ -26,4 +26,8 @@ void HurtboxComponent::updateHeight(float h) {
     this->h = h;
 }
 
+void HurtboxComponent::updateRadius(float r) {
+    this->r = r;
+}
+
 #endif // HURTBOXCOMPONENT_CPP

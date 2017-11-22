@@ -1,7 +1,8 @@
 #include "crispsynth/Game.h"
 #include "crispsynth/scenes/Scene.h"
+#include "crispsynth/Locator.h"
 
-Game::Game(sf::RenderWindow &window, bool isView) : window(window) {
+Game::Game(sf::RenderWindow &window, bool isView) :  window(window), config(Locator::currentConfig) {
     this->view = isView;
     if (!this->view) {
         this->fullscreen = config["video"]["fullscreen"].as<bool>();
@@ -9,7 +10,7 @@ Game::Game(sf::RenderWindow &window, bool isView) : window(window) {
     }
 }
 
-Game::Game(sf::RenderWindow &window) : window(window) {
+Game::Game(sf::RenderWindow &window) : window(window), config(Locator::currentConfig) {
     if (!this->view) {
         this->fullscreen = config["video"]["fullscreen"].as<bool>();
         update();

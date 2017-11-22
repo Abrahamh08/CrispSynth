@@ -1,10 +1,12 @@
 #ifndef CRISPSYNTH_GAME_H
 #define CRISPSYNTH_GAME_H
 
-#include "crispsynth/Locator.h"
 #include <SFML/Graphics.hpp>
+#include <memory>
+#include <yaml-cpp/yaml.h>
 
 class Scene;
+class Locator;
 
 class Game {
 public:
@@ -19,7 +21,7 @@ public:
     sf::Time timePerFrame;
     bool view = false;
 protected:
-    YAML::Node &config = Locator::currentConfig;
+    YAML::Node &config;
 };
 
 #endif

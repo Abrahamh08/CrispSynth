@@ -58,7 +58,7 @@ void HitboxObject::prevFrame() {
 }
 
 void HitboxObject::updateRadius(float r) {
-    this->r = r;
+    this->_r = r;
 }
 
 #endif // HITTBOXOBJECT_CPP

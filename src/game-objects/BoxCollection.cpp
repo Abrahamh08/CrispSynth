@@ -6,6 +6,8 @@
 #define BOXCOLLECTION_CPP
 
 #include "crispsynth/game-objects/BoxCollection.h"
+#include "crispsynth/game-objects/HitboxObject.h"
+#include "crispsynth/game-objects/components/HurtboxComponent.h"
 
 BoxCollection::BoxCollection() {
     // do nothing
