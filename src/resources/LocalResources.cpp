@@ -130,6 +130,7 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
     int state = 0; // 0 = nothing, 1 = hurtbox, 2 = hitbox
     unsigned int count = 0;
     unsigned int lastId = 0;
+    HurtboxComponent modify;
     for (const std::string &token : tokens) {
         if (token == "[ub]") {
             count = 0;
@@ -149,7 +150,6 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
                     }
                     for (unsigned int i = 0; i < floats.size(); i++) {
                         float value = floats.at(i);
-                        HurtboxComponent modify;
                         modify.id = lastId;
                         switch(count + i - 1) {
                             case 0:
@@ -174,9 +174,10 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
                                 break;
                             case 7:
                                 modify.sZ = value;
+                                count = 0;
+                                returnCollection.hurtboxes.push_back(modify);
                                 break;
                         }
-                        returnCollection.hurtboxes.push_back(modify);
                     }
                     break;
             }
