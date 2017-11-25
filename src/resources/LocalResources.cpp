@@ -176,7 +176,7 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
                                 modify.sZ = value;
                                 break;
                         }
-                        returnCollection.hurtboxes.insert(returnCollection.hurtboxes.begin() + lastId, modify);
+                        returnCollection.hurtboxes.push_back(modify);
                     }
                     break;
             }
