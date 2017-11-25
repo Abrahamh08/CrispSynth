@@ -140,44 +140,43 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
                     if (count == 0) {
                         count++;
                         lastId = std::stoi(token.substr(0, token.find(":")));
-                        if (returnCollection.hurtboxes.size() <= lastId) {
-                            returnCollection.hurtboxes.resize(lastId + 1);
-                        }
                     }
                     std::string data = token.substr(token.find(':') + 1);
                     std::vector<std::string> floatStrs = split(data, ',');
                     std::vector<float> floats;
                     for (const std::string &theFloat : floatStrs) {
-                        std::cout << theFloat << std::endl;
                         floats.emplace_back(std::stof(theFloat));
                     }
                     for (unsigned int i = 0; i < floats.size(); i++) {
                         float value = floats.at(i);
-                        HurtboxComponent &modify = returnCollection.hurtboxes.at(lastId);
+                        HurtboxComponent modify;
+                        modify.id = lastId;
                         switch(count + i - 1) {
                             case 0:
                                 modify.r = value;
                                 break;
                             case 1:
-                                modify.sX = value;
-                                break;
+                                modify.h = value;
                             case 2:
-                                modify.sY = value;
-                                break;
-                            case 3:
-                                modify.sZ = value;
-                                break;
-                            case 4:
                                 modify.x = value;
                                 break;
-                            case 5:
+                            case 3:
                                 modify.y = value;
                                 break;
-                            case 6:
+                            case 4:
                                 modify.z = value;
                                 break;
+                            case 5:
+                                modify.sX = value;
+                                break;
+                            case 6:
+                                modify.sY = value;
+                                break;
+                            case 7:
+                                modify.sZ = value;
+                                break;
                         }
-                        std::cout << i << " " << count << std::endl;
+                        returnCollection.hurtboxes.insert(returnCollection.hurtboxes.begin() + lastId, modify);
                     }
                     break;
             }
