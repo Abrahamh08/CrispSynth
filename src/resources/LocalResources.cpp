@@ -90,7 +90,99 @@ sf::Image LocalResources::loadImage(std::string state, std::string id) {
     return returnImage;
 }
 
+// https://stackoverflow.com/a/236803
+template<typename Out>
+inline void split(const std::string &s, char delim, Out result) {
+    std::stringstream ss(s);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        *(result++) = item;
+    }
+}
+
+inline std::vector<std::string> split(const std::string &s, char delim) {
+    std::vector<std::string> elems;
+    split(s, delim, std::back_inserter(elems));
+    return elems;
+}
+
 BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
     // load box collection and return thing
-    return BoxCollection();
+    BoxCollection returnCollection;
+    std::ifstream file;
+    file.open((Locator::rootPath / "assets" / group / id).generic_string());
+    if (!file) {
+        std::cerr << "Unable to open " << id << std::endl;
+    }
+
+    std::vector<std::string> tokens;
+    std::string fileText;
+
+    while (file.peek() != EOF) {
+        std::string token;
+        std::getline(file, token);
+        token = token.substr(0, token.find(";"));
+        tokens.emplace_back(token);
+    }
+
+    file.close();
+
+    int state = 0; // 0 = nothing, 1 = hurtbox, 2 = hitbox
+    unsigned int count = 0;
+    unsigned int lastId = 0;
+    for (const std::string &token : tokens) {
+        if (token == "[ub]") {
+            count = 0;
+            state = 1;
+        } else {
+            switch (state) {
+                case 1:
+                    if (count == 0) {
+                        count++;
+                        lastId = std::stoi(token.substr(0, token.find(":")));
+                        if (returnCollection.hurtboxes.size() <= lastId) {
+                            returnCollection.hurtboxes.resize(lastId + 1);
+                        }
+                    }
+                    std::string data = token.substr(token.find(':') + 1);
+                    std::vector<std::string> floatStrs = split(data, ',');
+                    std::vector<float> floats;
+                    for (const std::string &theFloat : floatStrs) {
+                        std::cout << theFloat << std::endl;
+                        floats.emplace_back(std::stof(theFloat));
+                    }
+                    for (unsigned int i = 0; i < floats.size(); i++) {
+                        float value = floats.at(i);
+                        HurtboxComponent &modify = returnCollection.hurtboxes.at(lastId);
+                        switch(count + i - 1) {
+                            case 0:
+                                modify.r = value;
+                                break;
+                            case 1:
+                                modify.sX = value;
+                                break;
+                            case 2:
+                                modify.sY = value;
+                                break;
+                            case 3:
+                                modify.sZ = value;
+                                break;
+                            case 4:
+                                modify.x = value;
+                                break;
+                            case 5:
+                                modify.y = value;
+                                break;
+                            case 6:
+                                modify.z = value;
+                                break;
+                        }
+                        std::cout << i << " " << count << std::endl;
+                    }
+                    break;
+            }
+        }
+    }
+
+    return returnCollection;
 }
