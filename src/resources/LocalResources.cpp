@@ -5,6 +5,7 @@
 #include "crispsynth/resources/LocalResources.h"
 #include "crispsynth/mesh/StaticMesh.h"
 #include "crispsynth/mesh/BonedMesh.h"
+#include <boost/algorithm/string.hpp>
 
 sf::Texture LocalResources::loadTexture(std::string state, std::string id, sf::IntRect* rect) {
     // load texture and return thing
@@ -144,36 +145,36 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
                     }
                     std::string data = token.substr(token.find(':') + 1);
                     std::vector<std::string> floatStrs = split(data, ',');
-                    std::vector<float> floats;
-                    for (const std::string &theFloat : floatStrs) {
-                        floats.emplace_back(std::stof(theFloat));
-                    }
-                    for (unsigned int i = 0; i < floats.size(); i++) {
-                        float value = floats.at(i);
+                    for (unsigned int i = 0; i < floatStrs.size(); i++) {
+                        std::string value = floatStrs.at(i);
                         modify.id = lastId;
                         switch(count + i - 1) {
                             case 0:
-                                modify.r = value;
+                                modify.r = std::stof(value);
                                 break;
                             case 1:
-                                modify.h = value;
+                                modify.h = std::stof(value);
                             case 2:
-                                modify.x = value;
+                                modify.x = std::stof(value);
                                 break;
                             case 3:
-                                modify.y = value;
+                                modify.y = std::stof(value);
                                 break;
                             case 4:
-                                modify.z = value;
+                                modify.z = std::stof(value);
                                 break;
                             case 5:
-                                modify.sX = value;
+                                modify.sX = std::stof(value);
                                 break;
                             case 6:
-                                modify.sY = value;
+                                modify.sY = std::stof(value);
                                 break;
                             case 7:
-                                modify.sZ = value;
+                                modify.sZ = std::stof(value);
+                                break;
+                            case 8:
+                                boost::trim_left(value);
+                                modify.name = value;
                                 count = 0;
                                 returnCollection.hurtboxes.push_back(modify);
                                 break;
