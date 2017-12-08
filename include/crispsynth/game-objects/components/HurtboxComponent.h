@@ -16,9 +16,9 @@ public:
     void updateHeight(float h);
     void updateRadius(float r);
     void updateFrame(uint16_t transitionFrame);
-    float x, y, z, sX, sY, sZ, h, r;
-    unsigned int id;
-    std::string name;
+    float x = 0, y = 0, z = 0, sX = 0, sY = 0, sZ = 0, h = 1, r = 5;
+    unsigned int id = 0;
+    std::string name = "untitled";
 };
 
 #endif // HURTBOXCOMPONENT_H
