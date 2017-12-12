@@ -136,50 +136,59 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
         if (token == "[ub]") {
             count = 0;
             state = 1;
+        } else if (token == "[ib]") {
+            count = 0;
+            state = 2;
+        } else if (token == "") {
         } else {
             switch (state) {
-                case 1:
-                    if (count == 0) {
-                        count++;
-                        lastId = std::stoi(token.substr(0, token.find(":")));
-                    }
-                    std::string data = token.substr(token.find(':') + 1);
-                    std::vector<std::string> floatStrs = split(data, ',');
-                    for (unsigned int i = 0; i < floatStrs.size(); i++) {
-                        std::string value = floatStrs.at(i);
-                        modify.id = lastId;
-                        switch(count + i - 1) {
-                            case 0:
-                                modify.r = std::stof(value);
-                                break;
-                            case 1:
-                                modify.h = std::stof(value);
-                            case 2:
-                                modify.x = std::stof(value);
-                                break;
-                            case 3:
-                                modify.y = std::stof(value);
-                                break;
-                            case 4:
-                                modify.z = std::stof(value);
-                                break;
-                            case 5:
-                                modify.sX = std::stof(value);
-                                break;
-                            case 6:
-                                modify.sY = std::stof(value);
-                                break;
-                            case 7:
-                                modify.sZ = std::stof(value);
-                                break;
-                            case 8:
-                                boost::trim_left(value);
-                                modify.name = value;
-                                count = 0;
-                                returnCollection.hurtboxes.push_back(modify);
-                                break;
+                case 1: // hurtbox
+                    {
+                        if (count == 0) {
+                            count++;
+                            lastId = std::stoi(token.substr(0, token.find(":")));
                         }
+                        std::string data = token.substr(token.find(':') + 1);
+                        std::vector<std::string> floatStrs = split(data, ',');
+                        for (unsigned int i = 0; i < floatStrs.size(); i++) {
+                            std::string value = floatStrs.at(i);
+                            modify.id = lastId;
+                            switch(count + i - 1) {
+                                case 0:
+                                    modify.r = std::stof(value);
+                                    break;
+                                case 1:
+                                    modify.h = std::stof(value);
+                                case 2:
+                                    modify.x = std::stof(value);
+                                    break;
+                                case 3:
+                                    modify.y = std::stof(value);
+                                    break;
+                                case 4:
+                                    modify.z = std::stof(value);
+                                    break;
+                                case 5:
+                                    modify.sX = std::stof(value);
+                                    break;
+                                case 6:
+                                    modify.sY = std::stof(value);
+                                    break;
+                                case 7:
+                                    modify.sZ = std::stof(value);
+                                    break;
+                                case 8:
+                                    boost::trim_left(value);
+                                    modify.name = value;
+                                    count = 0;
+                                    returnCollection.hurtboxes.push_back(modify);
+                                    break;
+                            }
+                        }
+                        break;
                     }
+                case 2: // hitbox
+                    // do nothing rn
                     break;
             }
         }
