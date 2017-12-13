@@ -28,14 +28,14 @@ int HitboxObject::currentFrame() {
 }
 
 void HitboxObject::updateHitboxFrame() {
-    this->currentHitbox = hitboxFrames_[this->currentFrame_].get();
+    this->currentHitbox = hitboxFrames_.at(this->currentFrame_).get();
     this->_x = this->currentHitbox->x;
     this->_y = this->currentHitbox->y;
     this->_z = this->currentHitbox->z;
 }
 
-void HitboxObject::gotoFrame(int n) {
-    if (!this->hitboxFrames_[n]) {
+void HitboxObject::gotoFrame(const unsigned int n) {
+    if (this->hitboxFrames_.find(n) == this->hitboxFrames_.end()) {
         this->hitboxFrames_[n] = std::make_shared<HitboxComponent>();
     }
     this->currentFrame_ = n;
@@ -43,17 +43,12 @@ void HitboxObject::gotoFrame(int n) {
 }
 
 void HitboxObject::nextFrame() {
-    this->currentFrame_++;
-    if ((unsigned) this->currentFrame_ >= this->hitboxFrames_.size()) {
-        this->hitboxFrames_.emplace_back(std::make_shared<HitboxComponent>());
-    }
-    this->updateHitboxFrame();
+    this->gotoFrame(currentFrame_ + 1);
 }
 
 void HitboxObject::prevFrame() {
     if (currentFrame_ > 0) {
-        this->currentFrame_--;
-        this->updateHitboxFrame();
+        this->gotoFrame(currentFrame_ - 1);
     }
 }
 

@@ -17,19 +17,19 @@ public:
     HitboxObject(float x, float y, float z, float sx, float sy, float sz, float h);
     virtual void updatePosition(float x, float y, float z);
     void updateRadius(float r);
-    void gotoFrame(int n);
+    void gotoFrame(const unsigned int n);
     void prevFrame();
     void nextFrame();
     int currentFrame();
 private:
     int currentFrame_ = 0;
-    std::vector<std::shared_ptr<HitboxComponent>> hitboxFrames_ = {std::make_shared<HitboxComponent>()};
+    std::map<unsigned int, std::shared_ptr<HitboxComponent>> hitboxFrames_;
     void updateHitboxFrame();
     float _x, _y, _z, _r;
 public:
     float &x = _x, &y = _y, &z = _z, &r = _r;
 public:
-    HitboxComponent *currentHitbox = hitboxFrames_[0].get();
+    HitboxComponent *currentHitbox;
 };
 
 #endif // HITBOXOBJECT_H

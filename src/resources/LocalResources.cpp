@@ -131,7 +131,8 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
     int state = 0; // 0 = nothing, 1 = hurtbox, 2 = hitbox
     unsigned int count = 0;
     unsigned int lastId = 0;
-    HurtboxComponent modify;
+    unsigned int lastFrame = 0;
+    HurtboxComponent modifyHurt;
     for (const std::string &token : tokens) {
         if (token == "[ub]") {
             count = 0;
@@ -143,56 +144,102 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
         } else {
             switch (state) {
                 case 1: // hurtbox
-                    {
-                        if (count == 0) {
-                            count++;
-                            lastId = std::stoi(token.substr(0, token.find(":")));
-                        }
-                        std::string data = token.substr(token.find(':') + 1);
-                        std::vector<std::string> floatStrs = split(data, ',');
-                        for (unsigned int i = 0; i < floatStrs.size(); i++) {
-                            std::string value = floatStrs.at(i);
-                            modify.id = lastId;
-                            switch(count + i - 1) {
-                                case 0:
-                                    modify.r = std::stof(value);
-                                    break;
-                                case 1:
-                                    modify.h = std::stof(value);
-                                case 2:
-                                    modify.x = std::stof(value);
-                                    break;
-                                case 3:
-                                    modify.y = std::stof(value);
-                                    break;
-                                case 4:
-                                    modify.z = std::stof(value);
-                                    break;
-                                case 5:
-                                    modify.sX = std::stof(value);
-                                    break;
-                                case 6:
-                                    modify.sY = std::stof(value);
-                                    break;
-                                case 7:
-                                    modify.sZ = std::stof(value);
-                                    break;
-                                case 8:
-                                    boost::trim_left(value);
-                                    modify.name = value;
-                                    count = 0;
-                                    returnCollection.hurtboxes.push_back(modify);
-                                    break;
-                            }
-                        }
-                        break;
+                {
+                    if (count == 0) {
+                        count++;
+                        lastId = std::stoi(token.substr(0, token.find(":")));
                     }
-                case 2: // hitbox
-                    // do nothing rn
+                    std::string data = token.substr(token.find(':') + 1);
+                    std::vector<std::string> floatStrs = split(data, ',');
+                    for (unsigned int i = 0; i < floatStrs.size(); i++) {
+                        std::string value = floatStrs.at(i);
+                        modifyHurt.id = lastId;
+                        switch(count + i - 1) {
+                            case 0:
+                                modifyHurt.r = std::stof(value);
+                                break;
+                            case 1:
+                                modifyHurt.h = std::stof(value);
+                            case 2:
+                                modifyHurt.x = std::stof(value);
+                                break;
+                            case 3:
+                                modifyHurt.y = std::stof(value);
+                                break;
+                            case 4:
+                                modifyHurt.z = std::stof(value);
+                                break;
+                            case 5:
+                                modifyHurt.sX = std::stof(value);
+                                break;
+                            case 6:
+                                modifyHurt.sY = std::stof(value);
+                                break;
+                            case 7:
+                                modifyHurt.sZ = std::stof(value);
+                                break;
+                            case 8:
+                                boost::trim_left(value);
+                                modifyHurt.name = value;
+                                count = 0;
+                                returnCollection.hurtboxes.push_back(modifyHurt);
+                                break;
+                        }
+                    }
                     break;
+                }
+                case 2: // hitbox
+                {
+                    if (count == 0) {
+                        int pos;
+                        if ((pos = token.find(":")) == -1) {
+                            lastFrame = std::stoi(token.substr(0, pos));
+                        }
+                        count++;
+                    }
+                    std::string data = token.substr(token.find(':') + 1);
+                    std::vector<std::string> floatStrs = split(data, ',');
+                    for (unsigned int i = 0; i < floatStrs.size(); i++) {
+                        std::string value = floatStrs.at(i);
+                        modifyHurt.id = lastId;
+                        switch(count + i - 1) {
+                            case 0:
+                                lastId = std::stof(value);
+                                if (returnCollection.hitboxes.find(lastId) == returnCollection.hitboxes.end()) {
+                                    returnCollection.hitboxes[lastId].gotoFrame(lastFrame);
+                                    returnCollection.hitboxes[lastId].currentHitbox->id = lastId;
+                                }
+                                break;
+                            case 1:
+                                returnCollection.hitboxes[lastId].r = std::stof(value);
+                                break;
+                            case 2:
+                                returnCollection.hitboxes[lastId].x = std::stof(value);
+                                break;
+                            case 3:
+                                returnCollection.hitboxes[lastId].y = std::stof(value);
+                                break;
+                            case 4:
+                                returnCollection.hitboxes[lastId].z = std::stof(value);
+                                break;
+                            case 5:
+                                break;
+                            case 6:
+                                break;
+                            case 7:
+                                break;
+                            case 8:
+                                break;
+                            case 9:
+                                count = 0;
+                                returnCollection.hurtboxes.push_back(modifyHurt);
+                                break;
+                        }
+                    }
+                    break;
+                }
             }
         }
     }
-
     return returnCollection;
 }

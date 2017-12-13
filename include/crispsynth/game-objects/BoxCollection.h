@@ -12,7 +12,7 @@
 class BoxCollection {
 public:
     BoxCollection();
-    std::vector<HitboxObject> hitboxes;
+    std::map<unsigned int, HitboxObject> hitboxes;
     std::vector<HurtboxComponent> hurtboxes;
 };
 
