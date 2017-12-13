@@ -23,8 +23,12 @@ void HitboxObject::updatePosition(float x, float y, float z) {
     this->_z = this->currentHitbox->z;
 }
 
-int HitboxObject::currentFrame() {
+unsigned int HitboxObject::currentFrame() {
     return this->currentFrame_;
+}
+
+bool HitboxObject::hasFrame(unsigned int frame) {
+    return this->hitboxFrames_.find(frame) != this->hitboxFrames_.end();
 }
 
 void HitboxObject::updateHitboxFrame() {

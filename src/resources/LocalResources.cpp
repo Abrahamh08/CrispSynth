@@ -232,7 +232,6 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
                                 break;
                             case 9:
                                 count = 0;
-                                returnCollection.hurtboxes.push_back(modifyHurt);
                                 break;
                         }
                     }
