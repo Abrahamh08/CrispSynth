@@ -20,9 +20,10 @@ public:
     void gotoFrame(const unsigned int n);
     void prevFrame();
     void nextFrame();
-    int currentFrame();
+    bool hasFrame(unsigned int frame);
+    unsigned int currentFrame();
 private:
-    int currentFrame_ = 0;
+    unsigned int currentFrame_ = 0;
     std::map<unsigned int, std::shared_ptr<HitboxComponent>> hitboxFrames_;
     void updateHitboxFrame();
     float _x, _y, _z, _r;
