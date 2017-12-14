@@ -33,8 +33,11 @@ private:
     float _x, _y, _z, _r;
     std::string _id;
 public:
-    float &x, &y, &z, &r;
-    std::string &id = _id;
+    const float &x;
+    const float &y;
+    const float &z;
+    const float &r;
+    const std::string &id;
 public:
     HitboxComponent *currentHitbox;
 };
