@@ -13,6 +13,9 @@ public:
 
     using Component::update;
     void updatePosition(float x, float y, float z);
+    void updateX(float x);
+    void updateY(float y);
+    void updateZ(float z);
     void updateFrame(uint16_t transitionFrame);
     float x = 0, y = 0, z = 0;
     unsigned int id = 0;

@@ -39,9 +39,7 @@ std::unique_ptr<StaticMesh> LocalResources::loadStaticMesh(std::string group, st
     // load static mesh and return thing
     boost::filesystem::path path = Locator::rootPath / "assets" / "meshes" / group / id;
 
-    std::cout << "loading static mesh named " << id.c_str() << std::endl;
-
-    std::unique_ptr<StaticMesh> mesh = std::make_unique<StaticMesh>();
+    std::cout << "loading static mesh named " << id.c_str() << std::endl; std::unique_ptr<StaticMesh> mesh = std::make_unique<StaticMesh>();
     mesh->loadFromFile(path, textures);
 
     return mesh;
@@ -140,6 +138,9 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
         } else if (token == "[ib]") {
             count = 0;
             state = 2;
+        } else if (token == "[ibf]") {
+            count = 0;
+            state = 3;
         } else if (token == "") {
         } else {
             switch (state) {
@@ -148,12 +149,12 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
                     if (count == 0) {
                         count++;
                         lastId = std::stoi(token.substr(0, token.find(":")));
+                        modifyHurt.id = lastId;
                     }
                     std::string data = token.substr(token.find(':') + 1);
                     std::vector<std::string> floatStrs = split(data, ',');
                     for (unsigned int i = 0; i < floatStrs.size(); i++) {
                         std::string value = floatStrs.at(i);
-                        modifyHurt.id = lastId;
                         switch(count + i - 1) {
                             case 0:
                                 modifyHurt.r = std::stof(value);
@@ -192,8 +193,9 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
                 {
                     if (count == 0) {
                         int pos;
-                        if ((pos = token.find(":")) == -1) {
-                            lastFrame = std::stoi(token.substr(0, pos));
+                        if ((pos = token.find(":")) != -1) {
+                            lastId = std::stoi(token.substr(0, pos));
+                            returnCollection.hitboxes[lastId].updateId(lastId);
                         }
                         count++;
                     }
@@ -204,23 +206,15 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
                         modifyHurt.id = lastId;
                         switch(count + i - 1) {
                             case 0:
-                                lastId = std::stof(value);
-                                if (returnCollection.hitboxes.find(lastId) == returnCollection.hitboxes.end()) {
-                                    returnCollection.hitboxes[lastId].gotoFrame(lastFrame);
-                                    returnCollection.hitboxes[lastId].currentHitbox->id = lastId;
-                                }
+                                returnCollection.hitboxes[lastId].updateRadius(std::stof(value));
                                 break;
                             case 1:
-                                returnCollection.hitboxes[lastId].r = std::stof(value);
                                 break;
                             case 2:
-                                returnCollection.hitboxes[lastId].x = std::stof(value);
                                 break;
                             case 3:
-                                returnCollection.hitboxes[lastId].y = std::stof(value);
                                 break;
                             case 4:
-                                returnCollection.hitboxes[lastId].z = std::stof(value);
                                 break;
                             case 5:
                                 break;
@@ -231,12 +225,51 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
                             case 8:
                                 break;
                             case 9:
+                                break;
+                            case 10:
+                                break;
+                            case 11:
                                 count = 0;
                                 break;
                         }
                     }
                     break;
                 }
+                case 3:
+                {
+                    if (count == 0) {
+                        int pos;
+                        if ((pos = token.find(":")) != -1) {
+                            lastFrame = std::stoi(token.substr(0, pos));
+                        } else {
+                            count++;
+                        }
+                    }
+                    std::string data = token.substr(token.find(':') + 1);
+                    std::vector<std::string> floatStrs = split(data, ',');
+                    for (unsigned int i = 0; i < floatStrs.size(); i++) {
+                        std::string value = floatStrs.at(i);
+                        modifyHurt.id = lastId;
+                        switch(count + i - 1) {
+                            case 0:
+                                lastId = std::stof(value);
+                                returnCollection.hitboxes[lastId].gotoFrame(lastFrame);
+                                break;
+                            case 1:
+                                returnCollection.hitboxes[lastId].updateX(std::stof(value));
+                                break;
+                            case 2:
+                                returnCollection.hitboxes[lastId].updateY(std::stof(value));
+                                break;
+                            case 3:
+                                returnCollection.hitboxes[lastId].updateZ(std::stof(value));
+                                count = 0;
+                                break;
+                        }
+                    }
+                    break;
+                }
+                break;
             }
         }
     }

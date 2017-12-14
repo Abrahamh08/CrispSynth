@@ -17,4 +17,16 @@ void HitboxComponent::updatePosition(float x, float y, float z) {
     this->z = z;
 }
 
+void HitboxComponent::updateX(float x) {
+    this->x = x;
+}
+
+void HitboxComponent::updateY(float y) {
+    this->y = y;
+}
+
+void HitboxComponent::updateZ(float z) {
+    this->z = z;
+}
+
 #endif // HITBOXCOMPONENT_CPP

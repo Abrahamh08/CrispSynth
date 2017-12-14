@@ -16,7 +16,11 @@ public:
     HitboxObject();
     HitboxObject(float x, float y, float z, float sx, float sy, float sz, float h);
     virtual void updatePosition(float x, float y, float z);
+    void updateX(float x);
+    void updateY(float y);
+    void updateZ(float z);
     void updateRadius(float r);
+    void updateId(unsigned int id);
     void gotoFrame(const unsigned int n);
     void prevFrame();
     void nextFrame();
@@ -27,8 +31,10 @@ private:
     std::map<unsigned int, std::shared_ptr<HitboxComponent>> hitboxFrames_;
     void updateHitboxFrame();
     float _x, _y, _z, _r;
+    std::string _id;
 public:
     float &x = _x, &y = _y, &z = _z, &r = _r;
+    std::string &id = _id;
 public:
     HitboxComponent *currentHitbox;
 };

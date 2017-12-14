@@ -23,6 +23,25 @@ void HitboxObject::updatePosition(float x, float y, float z) {
     this->_z = this->currentHitbox->z;
 }
 
+void HitboxObject::updateX(float x) {
+    this->currentHitbox->updateX(x);
+    this->_x = this->currentHitbox->x;
+}
+
+void HitboxObject::updateY(float y) {
+    this->currentHitbox->updateY(y);
+    this->_y = this->currentHitbox->y;
+}
+
+void HitboxObject::updateZ(float z) {
+    this->currentHitbox->updateZ(z);
+    this->_z = this->currentHitbox->z;
+}
+
+void HitboxObject::updateId(unsigned int id) {
+    this->_id = id;
+}
+
 unsigned int HitboxObject::currentFrame() {
     return this->currentFrame_;
 }
