@@ -11,7 +11,7 @@ HitboxObject::HitboxObject() {
     // do nothing
 }
 
-HitboxObject::HitboxObject(float x, float y, float z, float sx, float sy, float sz, float r) {
+HitboxObject::HitboxObject(float x, float y, float z, float sx, float sy, float sz, float r) : x(_x), y(_y), z(_z), r(_r) {
     this->updatePosition(x, y, z);
     this->updateRadius(r);
 }
