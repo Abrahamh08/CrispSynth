@@ -229,6 +229,9 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
                             case 10:
                                 break;
                             case 11:
+                                break;
+                            case 12:
+                                returnCollection.hitboxes[lastId].updateName(value);
                                 count = 0;
                                 break;
                         }

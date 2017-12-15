@@ -23,6 +23,10 @@ void HitboxObject::updatePosition(float x, float y, float z) {
     this->_z = this->currentHitbox->z;
 }
 
+void HitboxObject::updateName(std::string& name) {
+    this->_name = name;
+}
+
 void HitboxObject::updateX(float x) {
     this->currentHitbox->updateX(x);
     this->_x = this->currentHitbox->x;

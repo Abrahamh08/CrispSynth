@@ -21,6 +21,7 @@ public:
     void updateZ(float z);
     void updateRadius(float r);
     void updateId(unsigned int id);
+    void updateName(std::string &id);
     void gotoFrame(const unsigned int n);
     void prevFrame();
     void nextFrame();
@@ -31,13 +32,15 @@ private:
     std::map<unsigned int, std::shared_ptr<HitboxComponent>> hitboxFrames_;
     void updateHitboxFrame();
     float _x, _y, _z, _r;
-    std::string _id;
+    unsigned int _id;
+    std::string _name;
 public:
     float x() const { return _x; }
     float y() const { return _y; }
     float z() const { return _z; }
     float r() const { return _r; }
-    std::string id() const { return _id; }
+    std::string name() const { return _name; }
+    unsigned int id() const { return _id; }
 public:
     HitboxComponent *currentHitbox;
 };
