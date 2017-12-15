@@ -7,11 +7,11 @@
 
 #include "crispsynth/game-objects/HitboxObject.h"
 
-HitboxObject::HitboxObject() : x(_x), y(_y), z(_z), r(_r), id(_id) {
+HitboxObject::HitboxObject() {
     // do nothing
 }
 
-HitboxObject::HitboxObject(float x, float y, float z, float sx, float sy, float sz, float r) : x(_x), y(_y), z(_z), r(_r), id(_id) {
+HitboxObject::HitboxObject(float x, float y, float z, float sx, float sy, float sz, float r) {
     this->updatePosition(x, y, z);
     this->updateRadius(r);
 }

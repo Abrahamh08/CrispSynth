@@ -33,11 +33,11 @@ private:
     float _x, _y, _z, _r;
     std::string _id;
 public:
-    const float &x;
-    const float &y;
-    const float &z;
-    const float &r;
-    const std::string &id;
+    float x() const { return _x; }
+    float y() const { return _y; }
+    float z() const { return _z; }
+    float r() const { return _r; }
+    std::string id() const { return _id; }
 public:
     HitboxComponent *currentHitbox;
 };
