@@ -241,9 +241,8 @@ BoxCollection LocalResources::loadBoxes(std::string group, std::string id) {
                         int pos;
                         if ((pos = token.find(":")) != -1) {
                             lastFrame = std::stoi(token.substr(0, pos));
-                        } else {
-                            count++;
                         }
+                        count++;
                     }
                     std::string data = token.substr(token.find(':') + 1);
                     std::vector<std::string> floatStrs = split(data, ',');
