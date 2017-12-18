@@ -6,6 +6,7 @@
 #include "crispsynth/mesh/StaticMesh.h"
 #include "crispsynth/mesh/BonedMesh.h"
 #include <boost/algorithm/string.hpp>
+#include <fstream>
 
 sf::Texture LocalResources::loadTexture(std::string state, std::string id, sf::IntRect* rect) {
     // load texture and return thing
